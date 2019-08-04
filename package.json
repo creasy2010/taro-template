@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "build": "node index.js"
+  },
+  "devDependencies": {
+    "@imgcook/dsl-helper": "^0.0.1-alpha.0",
+    "lodash": "^4.17.11",
+    "prettier": "^1.11.1"
+  }
+}
