@@ -1,4 +1,4 @@
-module.exports = function (layoutData, opts) {
+module.exports = function (layoutData, opts ,baseName) {
   if (layoutData.attrs.className === 'root') {
     layoutData = layoutData.children[0];
   }
@@ -354,12 +354,14 @@ module.exports = function (layoutData, opts) {
   };
 
   const renderDataText = renderTemplate(layoutData);
+  const ConName = baseName.split('-').reduce((a ,b)=> a + b.charAt(0).toUpperCase() + b.slice(1),'');
   const comTexts = componentType.reduce((prev, next) => prev + ' , ' + next);
+
   openCode.start.push(
     _line(`import { ${comTexts} } from '@tarojs/components';`, {indent: {tab: 0}}),
     _line("import './index.less'", {indent: {tab: 0}}),
     _line("", {indent: {tab: 0}}),
-    _line("export default class GoodsDetail extends Component {", {indent: {tab: 0}}),
+    _line(`export default class ${ConName} extends Component {", {indent: {tab: 0}})`),
     _line("constructor(props) {", {indent: {tab: 1}}),
     _line("super(props);", {indent: {tab: 2}}),
     _line("}", {indent: {tab: 1}}),
