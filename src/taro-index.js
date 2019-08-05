@@ -342,7 +342,7 @@ module.exports = function (layoutData, opts ,baseName) {
         ret.push(line(`</${obj.element}>`, level));
       } else {
         // 单行 Child
-        ret.push(line(`${nextLine}>${obj.innerText ? obj.innerText : ''}</${obj.element}>`, level));
+        ret.push(line(nextLine.includes('Image') ? `${nextLine}/>` :`${nextLine}>${obj.innerText ? obj.innerText : ''}</${obj.element}>`, level));
       }
     } else {
       // 自闭合标签
