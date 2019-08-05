@@ -18,6 +18,12 @@ module.exports = function (layoutData, opts ,baseName) {
     picture: 'Image'
   };
 
+  // 自定义组件
+  const extComs = {
+    'CartCount': ['<CartCount count={0} getNum={(num) => {}} inventory={0} />', 'import CartCount from \'@/common/cart-count\';'],
+  }
+  const extComTypes = [];
+
   const line = (content, level) => utils.line(content, {indent: {space: level * 2}});
   const styleMap = {};
   const scriptMap = {
@@ -287,67 +293,84 @@ module.exports = function (layoutData, opts ,baseName) {
     delete obj.style.lines;
     delete obj.attrs.x;
     delete obj.attrs.y;
-    if (obj.attrs.className) {
-      obj.attrs.className = _.kebabCase(obj.attrs.className);
-    }
-    if (obj.attrs.source && obj.attrs.src) {
-      obj.attrs.src = obj.attrs.source;
-      delete obj.attrs.source;
-    }
-    obj.attrs.className = `${obj.attrs.className}`;
-    styleMap[obj.attrs.className] = {
-      ...styleMap[obj.attrs.className],
-      ...obj.style
-    };
 
     let ret = [];
-    let nextLine = '';
-    const attrs = Object.entries(obj.attrs).filter(([key, value]) => {
-      if (obj.element === 'Image') {
-        return ['className', 'src'].includes(key);
-      } else if (obj.element === 'video') {
-        return [
-          'className',
-          'src',
-          'controls',
-          'autoplay',
-          'muted',
-          'poster'
-        ].includes(key);
-      }
-      return key === 'className';
-    });
-    if (attrs.length > 3) {
-      ret.push(line(`<${obj.element}`, level));
-      ret = ret.concat(
-        attrs.map(([key, value]) =>
-          line(renderTemplateAttr(key, value), level + 1)
-        )
-      );
-    } else {
-      nextLine = `<${obj.element}`;
-      if (attrs.length) {
-        nextLine += ` ${attrs
-          .map(([key, value]) => renderTemplateAttr(key, value))
-          .join(' ')}`;
+    let extComFlag = false;
+    if (obj.attrs.className) {
+      const className = obj.attrs.className;
+      obj.attrs.className = _.kebabCase(obj.attrs.className);
+      // 处理自定义组件
+      let extComTag = className.lastIndexOf('_') == -1 ?
+        '' : className.substr(className.lastIndexOf('_') + 1);
+      if (Object.keys(extComs).includes(extComTag)) {
+        if (extComTypes.indexOf(extComTag) == -1) {
+          extComTypes.push(extComTag);
+        }
+        ret.push(line(extComs[extComTag][0], level));
+        extComFlag = true;
       }
     }
-    if (obj.children) {
-      if (Array.isArray(obj.children) && obj.children.length) {
-        // 多行 Child
-        ret.push(line(`${nextLine}>`, level));
+
+    // 处理普通组件
+    if (!extComFlag) {
+      if (obj.attrs.source && obj.attrs.src) {
+        obj.attrs.src = obj.attrs.source;
+        delete obj.attrs.source;
+      }
+      obj.attrs.className = `${obj.attrs.className}`;
+      styleMap[obj.attrs.className] = {
+        ...styleMap[obj.attrs.className],
+        ...obj.style
+      };
+
+      let nextLine = '';
+      const attrs = Object.entries(obj.attrs).filter(([key, value]) => {
+        if (obj.element === 'Image') {
+          return ['className', 'src'].includes(key);
+        } else if (obj.element === 'video') {
+          return [
+            'className',
+            'src',
+            'controls',
+            'autoplay',
+            'muted',
+            'poster'
+          ].includes(key);
+        }
+        return key === 'className';
+      });
+      if (attrs.length > 3) {
+        ret.push(line(`<${obj.element}`, level));
         ret = ret.concat(
-          ...obj.children.map(o => renderTemplate(o, level + 1))
+          attrs.map(([key, value]) =>
+            line(renderTemplateAttr(key, value), level + 1)
+          )
         );
-        ret.push(line(`</${obj.element}>`, level));
       } else {
-        // 单行 Child
-        ret.push(line(nextLine.includes('Image') ? `${nextLine}/>` :`${nextLine}>${obj.innerText ? obj.innerText : ''}</${obj.element}>`, level));
+        nextLine = `<${obj.element}`;
+        if (attrs.length) {
+          nextLine += ` ${attrs
+            .map(([key, value]) => renderTemplateAttr(key, value))
+            .join(' ')}`;
+        }
       }
-    } else {
-      // 自闭合标签
-      ret.push(line(`${nextLine} />`, level ));
-    }
+      if (obj.children) {
+        if (Array.isArray(obj.children) && obj.children.length) {
+          // 多行 Child
+          ret.push(line(`${nextLine}>`, level));
+          ret = ret.concat(
+            ...obj.children.map(o => renderTemplate(o, level + 1))
+          );
+          ret.push(line(`</${obj.element}>`, level));
+        } else {
+          // 单行 Child
+          ret.push(line(nextLine.includes('Image') ? `${nextLine}/>` :`${nextLine}>${obj.innerText ? obj.innerText : ''}</${obj.element}>`, level));
+        }
+      } else {
+        // 自闭合标签
+        ret.push(line(`${nextLine} />`, level ));
+      }
+    };
 
     return ret;
   };
@@ -358,6 +381,7 @@ module.exports = function (layoutData, opts ,baseName) {
 
   openCode.start.push(
     _line(`import { ${comTexts} } from '@tarojs/components';`, {indent: {tab: 0}}),
+    ...extComTypes.map(type => _line(extComs[type][1], {indent: {tab: 0}})),
     _line("import './index.less'", {indent: {tab: 0}}),
     _line("", {indent: {tab: 0}}),
     _line(`export default class ${ConName} extends Component {`, {indent: {tab: 0}}),
