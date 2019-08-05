@@ -288,27 +288,26 @@ module.exports = function (layoutData, opts ,baseName) {
     delete obj.attrs.x;
     delete obj.attrs.y;
     if (obj.attrs.className) {
-      obj.attrs.class = _.kebabCase(obj.attrs.className);
-      delete obj.attrs.className;
+      obj.attrs.className = _.kebabCase(obj.attrs.className);
     }
     if (obj.attrs.source && obj.attrs.src) {
       obj.attrs.src = obj.attrs.source;
       delete obj.attrs.source;
     }
-    obj.attrs.class = `${obj.attrs.class}`;
-    styleMap[obj.attrs.class] = {
-      ...styleMap[obj.attrs.class],
+    obj.attrs.className = `${obj.attrs.className}`;
+    styleMap[obj.attrs.className] = {
+      ...styleMap[obj.attrs.className],
       ...obj.style
     };
 
     let ret = [];
     let nextLine = '';
     const attrs = Object.entries(obj.attrs).filter(([key, value]) => {
-      if (obj.element === 'image') {
-        return ['class', 'src'].includes(key);
+      if (obj.element === 'Image') {
+        return ['className', 'src'].includes(key);
       } else if (obj.element === 'video') {
         return [
-          'class',
+          'className',
           'src',
           'controls',
           'autoplay',
@@ -316,7 +315,7 @@ module.exports = function (layoutData, opts ,baseName) {
           'poster'
         ].includes(key);
       }
-      return key === 'class';
+      return key === 'className';
     });
     if (attrs.length > 3) {
       ret.push(line(`<${obj.element}`, level));
@@ -343,7 +342,7 @@ module.exports = function (layoutData, opts ,baseName) {
         ret.push(line(`</${obj.element}>`, level));
       } else {
         // 单行 Child
-        ret.push(line(`${nextLine}>${obj.children}</${obj.element}>`, level));
+        ret.push(line(`${nextLine}>${obj.innerText ? obj.innerText : ''}</${obj.element}>`, level));
       }
     } else {
       // 自闭合标签
@@ -361,7 +360,7 @@ module.exports = function (layoutData, opts ,baseName) {
     _line(`import { ${comTexts} } from '@tarojs/components';`, {indent: {tab: 0}}),
     _line("import './index.less'", {indent: {tab: 0}}),
     _line("", {indent: {tab: 0}}),
-    _line(`export default class ${ConName} extends Component {", {indent: {tab: 0}})`),
+    _line(`export default class ${ConName} extends Component {`, {indent: {tab: 0}}),
     _line("constructor(props) {", {indent: {tab: 1}}),
     _line("super(props);", {indent: {tab: 2}}),
     _line("}", {indent: {tab: 1}}),

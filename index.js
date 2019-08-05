@@ -26,7 +26,11 @@ const switchFn = require('./src/taro-index');          //转换函数
   );*/
 
   const {tsx, less} = renderInfo.renderData;
-  fs.mkdirSync(resolve(__dirname, './dist'));
+
+  const distPath = resolve(__dirname, './dist');
+  if (!fs.existsSync(distPath)) {
+    fs.mkdirSync(distPath);
+  }
   await fs.writeFile(join(__dirname, `./dist/${baseName}.tsx`), tsx, () => console.log(`${baseName}.tsx文件生成完成`));
   await fs.writeFile(join(__dirname, `./dist/${baseName}.less`), less, () => console.log(`${baseName}.less文件生成完成`));
 })();
