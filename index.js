@@ -4,13 +4,16 @@ const prettier = require('prettier');
 const dslHelper = require('@imgcook/dsl-helper');
 const _ = require('lodash');
 
-const codeData = require("./src/assets/test-data");    //json数据文件
+const getData = require("./get-data");
+// const codeData = require("./src/assets/test-data");    //json数据文件
 const switchFn = require('./src/taro-index');          //转换函数
 
 (async () => {
   const baseName = basename(resolve(__dirname, './src/assets/test-data'));
 
-  const renderInfo = switchFn(codeData, {
+  const { data } = await getData();
+
+  const renderInfo = switchFn(data, {
     prettier,
     _,
     helper: dslHelper,
