@@ -6,7 +6,7 @@ module.exports = function () {
   const url = `https://imgcook.taobao.org/api/getModule?moduleId=${moduleId}`;
 
   return new Promise((resolve) => {
-    urllib.request(url, { method: 'GET', }, (err, data) => {
+    urllib.request(url, (err, data) => {
       const moduleData = JSON.parse(data.toString()).data;
       resolve({
         data: JSON.parse(moduleData.json),

@@ -10,15 +10,15 @@ const switchFn = require('./src/taro-index');          //转换函数
 const urllib = require('urllib');
 
 (async () => {
-  const baseName = basename(resolve(__dirname, './src/assets/test-data'));
+  const baseName = basename(resolve(__dirname, './src/assets/card'));
 
   const { data } = await getData();
 
   // 处理dist目录
-  resolveDir();
+  resolveDir(baseName);
 
   // 处理布局数据中的图片url
-  dealImageUrl(data);
+  dealImageUrl(data, baseName);
 
   // 转换代码
   const renderInfo = switchFn(data, {
@@ -38,10 +38,10 @@ const urllib = require('urllib');
  * 处理dist目录
  * 每次生成前先清空
  */
-const resolveDir = () => {
+const resolveDir = (baseName) => {
   delDir(join(__dirname, './dist/'));
   fs.mkdirSync(join(__dirname, './dist'));
-  fs.mkdirSync(join(__dirname, './dist/images'));
+  fs.mkdirSync(join(__dirname, `./dist/${baseName}`));
 }
 const delDir = (path) => {
   let files = [];
@@ -63,13 +63,13 @@ const delDir = (path) => {
  * 处理布局数据中的图片url
  * 将图片下载，并将url转成相对路径
  */
-const dealImageUrl = (data) => {
+const dealImageUrl = (data, baseName) => {
 
   // 递归处理图片方法
   const dealImage = (data) => {
     // 如果当前结点是图片，处理当前结点
     if (data.type === 'Image') {
-      const imgSrc = './images/' + downloadImg(data.attrs.src);
+      const imgSrc = downloadImg(data.attrs.src);
       data.attrs.src = imgSrc;
       data.attrs.source = imgSrc;
       data.props.attrs.src = imgSrc;
@@ -84,9 +84,9 @@ const dealImageUrl = (data) => {
   // 下载图片方法
   let imgIdx = 0;
   const downloadImg = (src) => {
-    let imgName = `image-${imgIdx++}.png`;
+    let imgName = `image${imgIdx++}`;
     urllib.request(src, (err, data) => {
-      fs.writeFileSync(join(__dirname, `./dist/images/${imgName}`), data);
+      fs.writeFileSync(join(__dirname, `./dist/${baseName}/${imgName}.png`), data);
     });
     return imgName;
   };

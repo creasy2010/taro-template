@@ -18,12 +18,6 @@ module.exports = function (layoutData, opts ,baseName) {
     picture: 'Image'
   };
 
-  // 自定义组件
-  const extComs = {
-    'CartCount': ['<CartCount count={0} getNum={(num) => {}} inventory={0} />', 'import CartCount from \'@/common/cart-count\';'],
-  }
-  const extComTypes = [];
-
   const line = (content, level) => utils.line(content, {indent: {space: level * 2}});
   const styleMap = {};
   const scriptMap = {
@@ -40,6 +34,17 @@ module.exports = function (layoutData, opts ,baseName) {
     start: [],
     end: []
   };
+
+  // 自定义组件
+  const extComs = {
+    'CartCount': ['<CartCount count={0} getNum={(num) => {}} inventory={0} />', 'import CartCount from \'@/common/cart-count\';'],
+  }
+  const extComTypes = [];
+
+  // 资源图片
+  const images = [];
+
+  // 基础组件
   let componentType = [];
   let _rImport = [
     _line("import Taro, { Component, Config } from '@tarojs/taro';", {indent: {tab: 0}})
@@ -124,16 +129,15 @@ module.exports = function (layoutData, opts ,baseName) {
   };
 
 
-  const normalizeTemplateAttrValue = value => {
-    if (typeof value === 'string') {
-      return JSON.stringify(value);
+  const renderTemplateAttr = (key, value) => {
+    if (['src', 'source'].includes(key)) {
+      value = `{${value}}`;
     } else {
-      return `"${JSON.stringify(value)}"`;
+      value = JSON.stringify(value);
     }
-  };
+    return `${key}=${value}`;
+  }
 
-  const renderTemplateAttr = (key, value) =>
-    `${key}=${normalizeTemplateAttrValue(value)}`;
   const getFuncBody = content => {
     if (content) {
       return content.match(
@@ -336,6 +340,12 @@ module.exports = function (layoutData, opts ,baseName) {
         ...obj.style
       };
 
+      if (obj.element === 'Image') {
+        if (!images.includes(obj.attrs.src)) {
+          images.push(obj.attrs.src);
+        }
+      }
+
       let nextLine = '';
       const attrs = Object.entries(obj.attrs).filter(([key, value]) => {
         if (obj.element === 'Image') {
@@ -395,6 +405,7 @@ module.exports = function (layoutData, opts ,baseName) {
   openCode.start.push(
     _line(`import { ${comTexts} } from '@tarojs/components';`, {indent: {tab: 0}}),
     ...extComTypes.map(type => _line(extComs[type][1], {indent: {tab: 0}})),
+    ...images.map(img => _line(`import ${img} from "@/assets/image/${baseName}/${img}.png";`, {indent: {tab: 0}})),
     _line("import './index.less'", {indent: {tab: 0}}),
     _line("", {indent: {tab: 0}}),
     _line(`export default class ${ConName} extends Component {`, {indent: {tab: 0}}),
