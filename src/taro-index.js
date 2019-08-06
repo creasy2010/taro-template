@@ -103,17 +103,23 @@ module.exports = function (layoutData, opts ,baseName) {
       });
 
   const renderStyleItem = (className, style) => [
-    line(`.${className} {`),
-    ...parseStyleObject(style).map(item => line(item, 1)),
-    line('}')
+    line(`.${className} {`, 1),
+    ...parseStyleObject(style).map(item => line(item, 2)),
+    line('}', 1)
   ];
 
-  const renderStyle = map =>
-    [].concat(
+  const renderStyle = (map, baseName) => {
+    const styleArr = [];
+    styleArr.push(line(`.${baseName} {`));
+    styleArr.push(...[].concat(
       ...Object.entries(map).map(([className, style]) =>
         renderStyleItem(className, style)
       )
-    );
+    ));
+    styleArr.push(line('}'));
+    return styleArr;
+  };
+
 
   const normalizeTemplateAttrValue = value => {
     if (typeof value === 'string') {
@@ -396,7 +402,7 @@ module.exports = function (layoutData, opts ,baseName) {
 
   renderData.tsx = printer([...openCode.start, ...renderDataText, ...openCode.end]);
 
-  renderData.less = printer(renderStyle(styleMap));
+  renderData.less = printer(renderStyle(styleMap, baseName));
 
   return {
     renderData,
