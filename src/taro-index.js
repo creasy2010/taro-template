@@ -108,11 +108,14 @@ module.exports = function (layoutData, opts ,baseName) {
     line('}', 1)
   ];
 
-  const renderStyle = (map, baseName) => {
+  const renderStyle = (map) => {
     const styleArr = [];
-    styleArr.push(line(`.${baseName} {`));
+   const entries = Object.entries(map);
+   const first = entries.shift();
+    styleArr.push(line(`.${first[0]} {`));
+    styleArr.push(...parseStyleObject(first[1]).map(item => line(item, 1)));
     styleArr.push(...[].concat(
-      ...Object.entries(map).map(([className, style]) =>
+      ...entries.map(([className, style]) =>
         renderStyleItem(className, style)
       )
     ));
@@ -323,7 +326,11 @@ module.exports = function (layoutData, opts ,baseName) {
         obj.attrs.src = obj.attrs.source;
         delete obj.attrs.source;
       }
-      obj.attrs.className = `${obj.attrs.className}`;
+
+      // 根结点样式名为baseName
+      if (Object.keys(styleMap).length == 0) {
+        obj.attrs.className = baseName;
+      }
       styleMap[obj.attrs.className] = {
         ...styleMap[obj.attrs.className],
         ...obj.style
@@ -402,7 +409,7 @@ module.exports = function (layoutData, opts ,baseName) {
 
   renderData.tsx = printer([...openCode.start, ...renderDataText, ...openCode.end]);
 
-  renderData.less = printer(renderStyle(styleMap, baseName));
+  renderData.less = printer(renderStyle(styleMap));
 
   return {
     renderData,
