@@ -1,4 +1,7 @@
 {
+  "name": "taro-imgcook",
+  "version": "0.0.0-alpha.1",
+  "main": "./src/index.js",
   "scripts": {
     "build": "node ./src/index.js"
   },
