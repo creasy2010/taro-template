@@ -1,9 +1,9 @@
-module.exports = function (layoutData, opts ,baseName) {
+module.exports = function (layoutData, opts) {
   if (layoutData.attrs.className === 'root') {
     layoutData = layoutData.children[0];
   }
   const renderData = {};
-  const {_, helper, prettier} = opts;
+  const {_, helper, prettier, pageName, componentName} = opts;
   const {printer, utils} = helper;
   const _line = helper.utils.line;
 
@@ -115,8 +115,8 @@ module.exports = function (layoutData, opts ,baseName) {
 
   const renderStyle = (map) => {
     const styleArr = [];
-   const entries = Object.entries(map);
-   const first = entries.shift();
+    const entries = Object.entries(map);
+    const first = entries.shift();
     styleArr.push(line(`.${first[0]} {`));
     styleArr.push(...parseStyleObject(first[1]).map(item => line(item, 1)));
     styleArr.push(...[].concat(
@@ -331,9 +331,9 @@ module.exports = function (layoutData, opts ,baseName) {
         delete obj.attrs.source;
       }
 
-      // 根结点样式名为baseName
+      // 根结点样式名为componentName
       if (Object.keys(styleMap).length == 0) {
-        obj.attrs.className = baseName;
+        obj.attrs.className = componentName;
       }
       styleMap[obj.attrs.className] = {
         ...styleMap[obj.attrs.className],
@@ -399,13 +399,13 @@ module.exports = function (layoutData, opts ,baseName) {
   };
 
   const renderDataText = renderTemplate(layoutData);
-  const ConName = baseName.split('-').reduce((a ,b)=> a + b.charAt(0).toUpperCase() + b.slice(1),'');
+  const ConName = componentName.split('-').reduce((a ,b)=> a + b.charAt(0).toUpperCase() + b.slice(1),'');
   const comTexts = componentType.reduce((prev, next) => prev + ' , ' + next);
 
   openCode.start.push(
     _line(`import { ${comTexts} } from '@tarojs/components';`, {indent: {tab: 0}}),
     ...extComTypes.map(type => _line(extComs[type][1], {indent: {tab: 0}})),
-    ...images.map(img => _line(`import ${img} from "@/assets/image/${baseName}/${img}.png";`, {indent: {tab: 0}})),
+    ...images.map(img => _line(`import ${img} from "@/assets/image/${pageName}/${img}.png";`, {indent: {tab: 0}})),
     _line("import './index.less'", {indent: {tab: 0}}),
     _line("", {indent: {tab: 0}}),
     _line(`export default class ${ConName} extends Component {`, {indent: {tab: 0}}),
@@ -414,7 +414,6 @@ module.exports = function (layoutData, opts ,baseName) {
     _line("}", {indent: {tab: 1}}),
     _line("", {indent: {tab: 0}}),
     _line("render() {", {indent: {tab: 1}}),
-    _line("let { main } = this.props;", {indent: {tab: 2}}),
     _line("return (", {indent: {tab: 2}})
   );
 
