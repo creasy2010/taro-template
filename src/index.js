@@ -3,10 +3,11 @@ const fs = require("fs");
 const prettier = require("prettier");
 const dslHelper = require("@imgcook/dsl-helper");
 const _ = require("lodash");
-
-const getData = require("./get-data");
-const switchFn = require("./dsl");          //转换函数
 const urllib = require("urllib");
+
+const cssProcessor = require('./css-processor');
+const switchFn = require("./dsl");          //转换函数
+const getData = require("./get-data");
 
 const projPath = process.cwd();
 
@@ -30,20 +31,18 @@ if (!dslConfig.imgDir) {
   dslConfig.imgDir = "./src/assets/image/";
 }
 if (!dslConfig.codeDir) {
-  dslConfig.codeDir = "./src/pages/tempcode/";
+  dslConfig.codeDir = "./src/pages/";
 }
 
 // 页面名
-const pageName = dslConfig.pageName;
-// 模块名
-const componentName = dslConfig.componentName;
+const pageUrl = dslConfig.pageUrl;
+const pageName = pageUrl.split('/').pop();
 // imgcook模块id
 const moduleId = dslConfig.moduleId;
 // 图片存放路径
-const imgDir = join(projPath, dslConfig.imgDir) + pageName;
+const imgDir = join(projPath, dslConfig.imgDir) + pageUrl;
 // 代码存放路径
-const codeDir = join(projPath, dslConfig.codeDir);
-
+const codeDir = join(projPath, dslConfig.codeDir) + pageUrl;
 
 
 (async () => {
@@ -57,19 +56,36 @@ const codeDir = join(projPath, dslConfig.codeDir);
   dealImageUrl(data);
   console.log(`图片生成完成 ${imgDir}`);
 
-  // 转换代码
-  const renderInfo = switchFn(data, {
-    prettier,
-    _,
-    helper: dslHelper,
-    // TODO imgcook中没有这两个变量
-    pageName,
-    componentName
+  // 切分布局
+  const nodes = divideLayout(data);
+
+  // 重命名className
+  renameClassName(data);
+  nodes.forEach(node => {
+    renameClassName(node);
   });
 
-  const { tsx, less } = renderInfo.renderData;
-  fs.writeFileSync(join(codeDir, `./${componentName}.tsx`), tsx);
-  fs.writeFileSync(join(codeDir, `./${componentName}.less`), less);
+  const generateCode = (data) => {
+    return switchFn(data, {
+      cssProcessor,
+      _,
+      helper: dslHelper,
+      pageName
+    }).renderData;
+  }
+
+  // 生成组件代码
+  nodes.forEach(node => {
+    const { tsx, less } = generateCode(node);
+    fs.writeFileSync(join(codeDir, `./components/${node.refComponentName}.tsx.temp`), tsx);
+    fs.writeFileSync(join(codeDir, `./components/${node.refComponentName}.less`), less);
+  });
+
+  // 生成index页代码
+  const { tsx, less } = generateCode(data);
+  fs.writeFileSync(join(codeDir, `./index.tsx.temp`), tsx);
+  fs.writeFileSync(join(codeDir, `./index.less`), less);
+
   console.log(`文件生成完成 ${codeDir}`);
 
 })();
@@ -109,7 +125,7 @@ const dealImageUrl = (data) => {
   // 下载图片方法
   let imgIdx = 0;
   const downloadImg = (src) => {
-    let imgName = `${componentName}${imgIdx++}`;
+    let imgName = `${pageName}${imgIdx++}`;
     urllib.request(src, (err, data) => {
       fs.writeFileSync(`${imgDir}/${imgName}.png`, data);
     });
@@ -124,3 +140,79 @@ const dealImageUrl = (data) => {
     data.dataBindingStore = [];
   }
 };
+
+
+/**
+ * 切分布局
+ */
+const divideLayout = (data) => {
+  let componentNodes = [];
+
+  data.componentName = pageName;
+
+  const dealNode = (node) => {
+    node.children.forEach(child => {
+      dealNode(child);
+    });
+    const className = node.attrs.className;
+    if (className && className.startsWith('com-')) {
+      // com开头的结点，单独提取布局树、标记为引用组件
+      componentNodes.push(node);
+      node.refComponentName = className.substring(4);
+      node.componentName = node.refComponentName;
+    }
+  }
+
+  dealNode(data);
+
+  return componentNodes;
+}
+
+/**
+ * 重命名className
+ * 比如 block_2-->block; img_2,img_4,img_6-->img,img_1,img_2
+ */
+const renameClassName = (data) => {
+  let map = {};
+
+  const deal = (node, isRoot) => {
+
+    // 引用结点不处理
+    if (!isRoot && node.refComponentName) return;
+
+    let className = node.attrs.className;
+    if (/_\d+$/.test(className)) {
+      // 扫描出样式以"_数字"结尾的结点，放入map
+      const pre = className.slice(0, className.lastIndexOf('_'));
+      node.attrs.className = pre;
+      className = pre;
+    }
+
+    if (map[className]) {
+      map[className].push(node);
+    } else {
+      map[className] = [node];
+    }
+
+    node.children.forEach(child => {
+      deal(child);
+    });
+  }
+
+  deal(data, true);
+
+  // 重命名样式
+  for (let key in map) {
+    for (let i = 0; i < map[key].length; i++) {
+      if (i != 0) {
+        map[key][i].attrs.className = map[key][i].attrs.className + i;
+      }
+    }
+  }
+
+  if (data.refComponentName) {
+    data.attrs.className = data.refComponentName;
+  } else {
+    data.attrs.className = pageName;
+  }
+}

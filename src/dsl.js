@@ -3,9 +3,13 @@ module.exports = function (layoutData, opts) {
     layoutData = layoutData.children[0];
   }
   const renderData = {};
-  const {_, helper, prettier, pageName, componentName} = opts;
+  const {_, helper, cssProcessor, pageName} = opts;
   const {printer, utils} = helper;
   const _line = helper.utils.line;
+
+
+  // 样式预处理
+  // layoutData = cssProcessor(layoutData);
 
   const COMPONENT_TYPE_MAP = {
     link: 'View',
@@ -84,7 +88,7 @@ module.exports = function (layoutData, opts) {
       case 'border-bottom-right-radius':
         value = '' + value;
         value = value.replace(/(rem)|(px)/, '');
-        value = (Number(value) * 750) / modConfig.designWidth;
+        value = (Number(value) * 2 * 750) / modConfig.designWidth;
         value = '' + value;
 
         if (value.length > 3 && value.substr(-3, 3) == 'rem') {  //度量单位转换
@@ -115,6 +119,7 @@ module.exports = function (layoutData, opts) {
 
   const renderStyle = (map) => {
     const styleArr = [];
+    // 取第一个样式为外层样式
     const entries = Object.entries(map);
     const first = entries.shift();
     styleArr.push(line(`.${first[0]} {`));
@@ -322,6 +327,12 @@ module.exports = function (layoutData, opts) {
         ret.push(line(extComs[extComTag][0], level));
         extComFlag = true;
       }
+
+      // 处理引用组件
+      if (obj.refComponentName && level != 3) { // TODO 用level判断不好
+        ret.push(line(`<${obj.refComponentName} />`, level));
+        extComFlag = true;
+      }
     }
 
     // 处理普通组件
@@ -331,10 +342,6 @@ module.exports = function (layoutData, opts) {
         delete obj.attrs.source;
       }
 
-      // 根结点样式名为componentName
-      if (Object.keys(styleMap).length == 0) {
-        obj.attrs.className = componentName;
-      }
       styleMap[obj.attrs.className] = {
         ...styleMap[obj.attrs.className],
         ...obj.style
@@ -399,7 +406,7 @@ module.exports = function (layoutData, opts) {
   };
 
   const renderDataText = renderTemplate(layoutData);
-  const ConName = componentName.split('-').reduce((a ,b)=> a + b.charAt(0).toUpperCase() + b.slice(1),'');
+  const ConName = layoutData.componentName;
   const comTexts = componentType.reduce((prev, next) => prev + ' , ' + next);
 
   openCode.start.push(
