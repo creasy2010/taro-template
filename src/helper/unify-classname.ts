@@ -1,8 +1,8 @@
-// ------------------统一className---------------
+import { ILayoutNode } from "../typings";
 
 // 比较两个字符串， 取长度更短的那个
 // 用于className统一名称时取较短的名称
-function getShorterStr(str1, str2) {
+function getShorterStr(str1: string, str2: string) {
   if (!str1 || !str2) return;
   if (str1.length <= str2.length) {
     return str1;
@@ -12,17 +12,35 @@ function getShorterStr(str1, str2) {
 }
 
 // style对象按属性名排序，并转成JSON对象
-function sortedStyleObjectAndToJsonStr(styleObject) {
+function sortedStyleObjectAndToJsonStr(styleObject, type: string) {
   if (!styleObject || typeof styleObject != 'object') return;
 
   const attrNames = Object.keys(styleObject);
   attrNames.sort();
 
-  let newStyleObject = {};
+  let newStyleObject: any = {};
   attrNames &&
   attrNames.forEach(name => {
     newStyleObject[name] = styleObject[name];
   });
+
+  switch (type) {
+    case 'view':
+      if (newStyleObject.position === 'relative') {
+        // view比较时，position='relative'不参与比较
+        delete newStyleObject.position;
+      }
+      break;
+    case 'text':
+      // 以下属性不参text比较
+      const ignoreAttrs = ['maxWidth', 'whiteSpace', 'lines', 'width', 'height'];
+      ignoreAttrs.forEach(attr => {
+        delete newStyleObject[attr];
+      });
+      break;
+    case 'picture':
+      break;
+  }
 
   return JSON.stringify(newStyleObject);
 }
@@ -33,10 +51,10 @@ function sortedStyleObjectAndToJsonStr(styleObject) {
  * @param {object} data
  * @param {object} style_class_map 存放style与class的对应关系，所有节点共用
  */
-function unifyClassName(data, style_class_map = {}) {
+function unifyClassName(data: ILayoutNode, style_class_map = {}) {
   if (!data || typeof data != 'object') return data;
 
-  const sortedStyleStr = sortedStyleObjectAndToJsonStr(data.style);
+  const sortedStyleStr = sortedStyleObjectAndToJsonStr(data.style, data.componentType);
 
   if (Object.keys(style_class_map).indexOf(sortedStyleStr) == -1) {
     style_class_map[sortedStyleStr] = {};
@@ -68,4 +86,6 @@ function unifyClassName(data, style_class_map = {}) {
   return data;
 }
 
-module.exports = unifyClassName;
+export default unifyClassName;
+
+// ref @imgcook/dsl-css-processor/lib/unifyClassName.js

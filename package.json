@@ -1,11 +1,12 @@
 {
   "name": "taro-imgcook",
   "version": "0.0.0-alpha.1",
-  "main": "./src/index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "build": "node ./src/index.js"
+    "build": "tsc"
   },
   "dependencies": {
+    "typescript": "^3.5.2",
     "@imgcook/dsl-helper": "^0.0.1-alpha.0",
     "lodash": "^4.17.11",
     "prettier": "^1.11.1",
