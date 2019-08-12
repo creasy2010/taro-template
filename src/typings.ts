@@ -28,7 +28,7 @@ export interface ILayoutNode {
   dataBindingStore?: any[];
 }
 
-interface ILayoutNodeAttr {
+export interface ILayoutNodeAttr {
   className: string;
   src?: string;
   source?: string;
