@@ -235,12 +235,12 @@ export default (layoutData: ILayoutNode, config: IParseConfig): ICompData => {
         ...obj.style
       };
 
-      if (obj.element === "Text") {
-        let textStyle = styleMap[obj.attrs.className];
-        if (textStyle.width && textStyle.maxWidth) {
-          delete textStyle.maxWidth;
-        }
-      }
+      // if (obj.element === "Text") {
+      //   let textStyle = styleMap[obj.attrs.className];
+      //   if (textStyle.width && textStyle.maxWidth) {
+      //     delete textStyle.maxWidth;
+      //   }
+      // }
 
       if (obj.element === "Image") {
         if (!images.includes(obj.attrs.src)) {

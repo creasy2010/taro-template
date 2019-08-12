@@ -33,10 +33,10 @@ function sortedStyleObjectAndToJsonStr(styleObject, type: string) {
       break;
     case 'text':
       // 以下属性不参text比较
-      const ignoreAttrs = ['maxWidth', 'whiteSpace', 'lines', 'width', 'height'];
-      ignoreAttrs.forEach(attr => {
-        delete newStyleObject[attr];
-      });
+      // const ignoreAttrs = ['maxWidth', 'whiteSpace', 'lines', 'width', 'height'];
+      // ignoreAttrs.forEach(attr => {
+      //   delete newStyleObject[attr];
+      // });
       break;
     case 'picture':
       break;
