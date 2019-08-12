@@ -11,5 +11,9 @@
     "lodash": "^4.17.11",
     "prettier": "^1.11.1",
     "urllib": "^2.34.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^5.0.5",
+    "@types/urllib": "^2.33.0"
   }
 }

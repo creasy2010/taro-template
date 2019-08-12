@@ -1,6 +1,6 @@
 // TODO import方式
 const { join } = require("path");
-const fs = require("fs");
+// const fs = require("fs");
 import { ICompData, ILayoutData, ILayoutNode, IParseConfig, IParseResult } from "./typings";
 import dataProcessor from './data-processor';
 import codeGenerator from './code-generator';
@@ -11,12 +11,10 @@ import codeGenerator from './code-generator';
  */
 const initConfig = (config: IParseConfig) => {
 
-  const projPath: string = process.cwd();
-
   if (!config.imgDir) {
     config.imgDir = "./src/assets/image/";
   }
-  config.imgDir = join(projPath, config.imgDir) + config.pagePath;
+  config.imgDir = join(config.pwd, config.imgDir) + config.pagePath;
 
   return config;
 }
@@ -26,20 +24,17 @@ const initConfig = (config: IParseConfig) => {
  * @param config
  */
 const resolveDir = (config: IParseConfig) => {
-  if (!fs.existsSync(config.imgDir)) {
-    fs.mkdirSync(config.imgDir);
-  }
+  config.fsExtra.ensureDirSync(config.imgDir);
 };
 
 /**
  * 获取模块的页面布局json
  * @param moduleId
  */
-const getLayoutJson = (moduleId: string): Promise<ILayoutData> => {
-  const urllib = require('urllib');
-  const url = `https://imgcook.taobao.org/api/getModule?moduleId=${moduleId}`;
+const getLayoutJson = (config: IParseConfig): Promise<ILayoutData> => {
+  const url = `https://imgcook.taobao.org/api/getModule?moduleId=${JSON.parse(config.moduleId)}`;
   return new Promise((resolve) => {
-    urllib.request(url, (err, data) => {
+    config.urllib.request(url, (err, data) => {
       try {
         const moduleData = JSON.parse(data.toString()).data;
         resolve({
@@ -63,7 +58,7 @@ export default async (config: IParseConfig): Promise<IParseResult> => {
 
   resolveDir(config);
 
-  let { data } = await getLayoutJson(config.moduleId);
+  let { data } = await getLayoutJson(config);
 
   const nodes: ILayoutNode[] = await dataProcessor(data, config);
 

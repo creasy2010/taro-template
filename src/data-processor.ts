@@ -1,6 +1,6 @@
 import { ILayoutNode, IParseConfig } from "./typings";
-import * as urllib from "urllib";
-const fs = require("fs");
+// import * as urllib from "urllib";
+// const fs = require("fs");
 
 /**
  * 处理布局数据中的图片url
@@ -28,8 +28,8 @@ const dealImageUrl = (data: ILayoutNode, config: IParseConfig) => {
   let imgIdx = 0;
   const downloadImg = (src) => {
     let imgName = `${config.pagePath}${imgIdx++}`;
-    urllib.request(src, (err, data) => {
-      fs.writeFileSync(`${config.imgDir}/${imgName}.png`, data);
+    config.urllib.request(src, (err, data) => {
+      config.fsExtra.writeFile(`${config.imgDir}/${imgName}.png`, data);
     });
     return imgName;
   };

@@ -2,6 +2,9 @@
 export interface IParseConfig {
   moduleId: string;
   pagePath: string;
+  pwd: string;
+  fsExtra: any;
+  urllib: any;
   imgDir?: string;
 }
 
