@@ -21,10 +21,34 @@
     escodegen "^1.11.1"
     lodash "^4.17.11"
 
+"@types/fs-extra@^5.0.5":
+  version "5.1.0"
+  resolved "https://registry.npm.taobao.org/@types/fs-extra/download/@types/fs-extra-5.1.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Ffs-extra%2Fdownload%2F%40types%2Ffs-extra-5.1.0.tgz#2a325ef97901504a3828718c390d34b8426a10a1"
+  integrity sha1-KjJe+XkBUEo4KHGMOQ00uEJqEKE=
+  dependencies:
+    "@types/node" "*"
+
+"@types/lodash@^4.14.136":
+  version "4.14.136"
+  resolved "https://registry.npm.taobao.org/@types/lodash/download/@types/lodash-4.14.136.tgz#413e85089046b865d960c9ff1d400e04c31ab60f"
+  integrity sha1-QT6FCJBGuGXZYMn/HUAOBMMatg8=
+
+"@types/node@*":
+  version "12.7.1"
+  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.7.1.tgz?cache=0&sync_timestamp=1565213600002&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-12.7.1.tgz#3b5c3a26393c19b400844ac422bd0f631a94d69d"
+  integrity sha1-O1w6Jjk8GbQAhErEIr0PYxqU1p0=
+
 "@types/node@^8.0.7":
   version "8.10.51"
   resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-8.10.51.tgz#80600857c0a47a8e8bafc2dae6daed6db58e3627"
   integrity sha1-gGAIV8Ckeo6Lr8La5trtbbWONic=
+
+"@types/urllib@^2.33.0":
+  version "2.33.0"
+  resolved "https://registry.npm.taobao.org/@types/urllib/download/@types/urllib-2.33.0.tgz#f1fa250066bd070695e961ad80fb2d098a8f6ede"
+  integrity sha1-8folAGa9BwaV6WGtgPstCYqPbt4=
+  dependencies:
+    urllib "*"
 
 acorn-jsx@^5.0.1:
   version "5.0.1"
@@ -939,7 +963,7 @@ unpipe@1.0.0:
   resolved "https://registry.npm.taobao.org/unpipe/download/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
   integrity sha1-sr9O6FFKrmFltIF4KdIbLvSZBOw=
 
-urllib@^2.34.0:
+urllib@*, urllib@^2.34.0:
   version "2.34.0"
   resolved "https://registry.npm.taobao.org/urllib/download/urllib-2.34.0.tgz#91bc630cfde9dd990bfb42ae9b1a82c7f6adfe10"
   integrity sha1-kbxjDP3p3ZkL+0KumxqCx/at/hA=

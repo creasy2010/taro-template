@@ -1,6 +1,4 @@
-// TODO import方式
-const { join } = require("path");
-// const fs = require("fs");
+import { join } from "path";
 import { ICompData, ILayoutData, ILayoutNode, IParseConfig, IParseResult } from "./typings";
 import dataProcessor from './data-processor';
 import codeGenerator from './code-generator';
@@ -15,7 +13,7 @@ const initConfig = (config: IParseConfig) => {
     config.imgDir = "./src/assets/image/";
   }
   config.imgDir = join(config.pwd, config.imgDir) + config.pagePath;
-
+  config.pageName = config.pagePath.split('/').pop();
   return config;
 }
 
