@@ -1,6 +1,6 @@
 import parser from '../index';
-const { join } = require("path");
-const fs = require("fs");
+import { join } from "path";
+import * as fs from "fs";
 import { IParseConfig, IParseResult } from "../typings";
 
 const projPath: string = process.cwd();

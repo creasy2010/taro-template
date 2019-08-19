@@ -1,11 +1,10 @@
 import { ICompData, ILayoutNode, IParseConfig } from "./typings";
 import unifyClassname from "./helper/unify-classname";
-
-const helper = require("@imgcook/dsl-helper");
-const _ = require("lodash");
+import * as helper from "@imgcook/dsl-helper";
+import * as _ from "lodash";
 
 export default (layoutData: ILayoutNode, config: IParseConfig): ICompData => {
-  const pageName = config.pagePath;
+  const pageName = config.pageName;
 
   helper.clearInheritedAttr(layoutData, false);
   unifyClassname(layoutData);

@@ -1,6 +1,4 @@
 import { ILayoutNode, IParseConfig } from "./typings";
-// import * as urllib from "urllib";
-// const fs = require("fs");
 
 /**
  * 处理布局数据中的图片url
@@ -27,7 +25,7 @@ const dealImageUrl = (data: ILayoutNode, config: IParseConfig) => {
   // 下载图片方法
   let imgIdx = 0;
   const downloadImg = (src) => {
-    let imgName = `${config.pagePath}${imgIdx++}`;
+    let imgName = `${config.pageName}${imgIdx++}`;
     config.urllib.request(src, (err, data) => {
       config.fsExtra.writeFile(`${config.imgDir}/${imgName}.png`, data);
     });
@@ -49,7 +47,7 @@ const dealImageUrl = (data: ILayoutNode, config: IParseConfig) => {
 const divideLayout = (data: ILayoutNode, config: IParseConfig) => {
   let componentNodes = [];
 
-  data.componentName = config.pagePath;
+  data.componentName = config.pageName;
 
   const dealNode = (node: ILayoutNode) => {
     node.children.forEach(child => {
@@ -114,7 +112,7 @@ const renameClassName = (data: ILayoutNode, config: IParseConfig) => {
   if (data.refComponentName) {
     data.attrs.className = data.refComponentName;
   } else {
-    data.attrs.className = config.pagePath;
+    data.attrs.className = config.pageName;
   }
 }
 

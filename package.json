@@ -6,14 +6,15 @@
     "build": "tsc"
   },
   "dependencies": {
-    "typescript": "^3.5.2",
     "@imgcook/dsl-helper": "^0.0.1-alpha.0",
     "lodash": "^4.17.11",
     "prettier": "^1.11.1",
+    "typescript": "^3.5.2",
     "urllib": "^2.34.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^5.0.5",
+    "@types/lodash": "^4.14.136",
     "@types/urllib": "^2.33.0"
   }
 }
