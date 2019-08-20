@@ -54,7 +54,7 @@ const divideLayout = (data: ILayoutNode, config: IParseConfig) => {
       dealNode(child);
     });
     const className = node.attrs.className;
-    if (className && className.startsWith('com-')) {
+    if (className && className.startsWith('com_')) {
       // com开头的结点，单独提取布局树、标记为引用组件
       componentNodes.push(node);
       node.refComponentName = className.substring(4);
