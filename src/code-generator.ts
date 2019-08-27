@@ -304,7 +304,7 @@ export default (layoutData: ILayoutNode, config: IParseConfig): ICompData => {
   const renderData: ICompData = {
     imports: printer([
       ...extComTypes.map(type => _line(extComs[type][1], { indent: { tab: 0 } })),
-      ...images.map(img => _line(`import ${img} from "@/assets/image/${pageName}/${img}.png";`, { indent: { tab: 0 } }))
+      ...images.map(img => _line(`import ${img} from "@/assets/image/${config.pagePath}/${img}.png";`, { indent: { tab: 0 } }))
     ]),
     vdom: printer([
       _line("return (", { indent: { tab: 2 } }),
