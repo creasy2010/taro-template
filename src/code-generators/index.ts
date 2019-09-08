@@ -1,6 +1,8 @@
 import { ICompData, ILayoutNode, IParseConfig, IParseResult } from "../typings";
 // import codeGenerator from "../code-generator";
 import h5Generrator from './html5';
+import taroGenerrator from './taro';
+import rnGenerrator from './react-native';
 
 /**
  * 切分布局
@@ -32,11 +34,11 @@ export const generateCode =  async (config: IParseConfig, data: ILayoutNode): Pr
   const nodes: ILayoutNode[] = divideLayout(data, config);
   let subComps: ICompData[] = [];
   nodes.forEach(node => {
-    const subComp = h5Generrator(node, config);
+    const subComp = rnGenerrator(node, config);
     subComp.componentName = node.componentName;
     subComps.push(subComp);
   });
-  let mainComp: ICompData = h5Generrator(data, config);
+  let mainComp: ICompData = rnGenerrator(data, config);
 
   return {
     subComps,

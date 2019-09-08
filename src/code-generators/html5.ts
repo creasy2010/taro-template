@@ -54,6 +54,7 @@ export default (data: ILayoutNode, config: IParseConfig): ICompData => {
     return str.replace(/\B([A-Z])/g, '-$1').toLowerCase()
   }
   const transVal = val => {
+    val = val ? val : 0;
     if (typeof(val) === 'number') val = val * 2 + 'px';
     return val;
   }
