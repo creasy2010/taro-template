@@ -1,5 +1,6 @@
 import { ICompData, ILayoutNode, IParseConfig, IParseResult } from "../typings";
-import codeGenerator from "../code-generator";
+// import codeGenerator from "../code-generator";
+import h5Generrator from './html5';
 
 /**
  * 切分布局
@@ -31,11 +32,11 @@ export const generateCode =  async (config: IParseConfig, data: ILayoutNode): Pr
   const nodes: ILayoutNode[] = divideLayout(data, config);
   let subComps: ICompData[] = [];
   nodes.forEach(node => {
-    const subComp = codeGenerator(node, config);
+    const subComp = h5Generrator(node, config);
     subComp.componentName = node.componentName;
     subComps.push(subComp);
   });
-  let mainComp: ICompData = codeGenerator(data, config);
+  let mainComp: ICompData = h5Generrator(data, config);
 
   return {
     subComps,

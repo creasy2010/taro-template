@@ -31,6 +31,7 @@ export interface ILayoutNode {
     designHeight: number;
   };
   dataBindingStore?: any[];
+  innerText: string;
 }
 
 export interface ILayoutNodeAttr {
