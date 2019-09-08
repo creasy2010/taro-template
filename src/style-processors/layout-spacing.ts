@@ -10,13 +10,14 @@ export function test(node: ILayoutNode): boolean {
 }
 
 export function enter(node: ILayoutNode) {
-  const { style: { flexDirection }, children } = node;
+  let { style: { flexDirection }, children } = node;
   // 行排列，左边距转右边距，外层加padding
+  children = children.filter(child => child.style.position !== 'absolute');
   if (flexDirection === 'row') {
     for (let i = 0; i < children.length; i++) {
       const childStyle = children[i].style;
       if (i == 0) {
-        appendVal(node.style, 'paddingLeft', childStyle.marginLeft);
+        appendVal(node.style, 'paddingLeft', val(childStyle.marginLeft));
       } else {
         const preChildStyle = children[i - 1].style;
         preChildStyle.marginRight = val(childStyle.marginLeft) + val(preChildStyle.marginRight);
@@ -36,7 +37,7 @@ export function enter(node: ILayoutNode) {
     for (let i = 0; i < children.length; i++) {
       const childStyle = children[i].style;
       if (i == 0) {
-        appendVal(node.style, 'paddingTop', childStyle.marginTop);
+        appendVal(node.style, 'paddingTop', val(childStyle.marginTop));
       } else {
         const preChildStyle = children[i - 1].style;
         preChildStyle.marginBottom = val(childStyle.marginTop) + val(preChildStyle.marginBottom);

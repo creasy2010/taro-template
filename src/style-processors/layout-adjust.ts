@@ -55,6 +55,9 @@ export function enter(node: ILayoutNode) {
       appendVal(node.style, 'paddingTop', paddingTB);
       appendVal(node.style, 'paddingBottom', paddingTB);
     }
+    if (node.style.justifyContent === 'flex-start' && alignItems === 'flex-start') {
+      node.style.alignItems = 'stretch';
+    }
   }
 }
 

@@ -10,7 +10,6 @@ export function test(node: ILayoutNode): boolean {
 }
 
 export function enter(node: ILayoutNode) {
-  rmLineHeightPx(node.style);
   const { type, style: { lineHeight, fontSize, flexDirection, width } } = node;
   if (type === 'Text') {
     if (lineHeight === fontSize) delete node.style.lineHeight;
@@ -19,7 +18,7 @@ export function enter(node: ILayoutNode) {
   } else if(isContainer(type)) {
     if (flexDirection === 'column') {
       delete node.style.height;
-      if (width == borderBoxWidth(node)) delete node.style.width;
+      if (width == borderBoxWidth(node, false)) delete node.style.width;
     }
     // fixme 这边还要优化
     if (node.children.length == 1 && node.children[0].type === 'Text' && node.style.width) {
@@ -34,11 +33,4 @@ export function enter(node: ILayoutNode) {
 
 export function exit(node: ILayoutNode) {
 
-}
-
-function rmLineHeightPx(style) {
-  let lineHeight = style.lineHeight;
-  if (lineHeight && lineHeight.endsWith('px')) {
-      style.lineHeight = parseInt(lineHeight.slice(0, lineHeight.length - 2));
-  }
 }

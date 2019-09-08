@@ -34,11 +34,11 @@ export const generateCode =  async (config: IParseConfig, data: ILayoutNode): Pr
   const nodes: ILayoutNode[] = divideLayout(data, config);
   let subComps: ICompData[] = [];
   nodes.forEach(node => {
-    const subComp = rnGenerrator(node, config);
+    const subComp = taroGenerrator(node, config);
     subComp.componentName = node.componentName;
     subComps.push(subComp);
   });
-  let mainComp: ICompData = rnGenerrator(data, config);
+  let mainComp: ICompData = taroGenerrator(data, config);
 
   return {
     subComps,

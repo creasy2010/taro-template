@@ -29,8 +29,8 @@ export default (data: ILayoutNode, config: IParseConfig): ICompData => {
       });
     }
     let attrStr = '';
-    attrStr += node.attrs.src ? ` src='{${node.attrs.src}}'` : '';
-    attrStr += node.attrs.className ? ` className='${node.attrs.className}'` : '';
+    attrStr += node.attrs.src ? ` src={${node.attrs.src}}` : '';
+    attrStr += node.attrs.className ? ` className="${node.attrs.className}"` : '';
 
     if (node.innerText) {
       lines.push(line(`<${nodeType}${attrStr}>${node.innerText}</${nodeType}>`, level));

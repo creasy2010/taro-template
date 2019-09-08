@@ -10,13 +10,17 @@ export function test(node: ILayoutNode): boolean {
 }
 
 export function enter(node: ILayoutNode) {
-  const { type } = node;
-  if (type === 'Text') {
-    delKeys(['whiteSpace', 'overflow', 'textOverflow', 'whiteSpace', 'maxWidth'], node.style);
-  } else if(type === 'Image') {
-    delKeys([ 'opacity'], node.style);
-  }
 }
 
 export function exit(node: ILayoutNode) {
+  const { type, style: { flexDirection, justifyContent, alignItems } } = node;
+  if (type === 'Text') {
+    delKeys(['whiteSpace', 'overflow', 'textOverflow', 'whiteSpace', 'maxWidth'], node.style);
+  }
+  if(type === 'Image') {
+    delKeys([ 'opacity'], node.style);
+  }
+  if (flexDirection === 'row') delete node.style.flexDirection;
+  if (justifyContent === 'flex-start') delete node.style.justifyContent;
+  if (alignItems === 'stretch') delete node.style.alignItems;
 }

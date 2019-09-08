@@ -96,12 +96,12 @@ function borderBoxHeight(node: ILayoutNode) {
 /**
  * 计算一个结点宽度
  */
-export function borderBoxWidth(node: ILayoutNode) {
+export function borderBoxWidth(node: ILayoutNode, useWidth: boolean) {
   let { type, style: { width, flexDirection, paddingLeft, paddingRight, borderWidth } } = node;
-  if (width) return width;
+  if (width && useWidth) return width;
 
   if (type === 'Text') {
-    console.error("无法计算宽度");
+    return NaN;
   } else if (isContainer(type)) {
     if (flexDirection === 'row') {
       width = node.children.reduce((total, child) => total + marginWidth(child), 0);
@@ -117,6 +117,6 @@ export function borderBoxWidth(node: ILayoutNode) {
 
 export function marginWidth(node: ILayoutNode) {
   const { marginLeft, marginRight } = node.style;
-  return borderBoxWidth(node) + val(marginLeft) + val(marginRight);
+  return borderBoxWidth(node, true) + val(marginLeft) + val(marginRight);
 }
 
