@@ -16,7 +16,8 @@ export interface ILayoutData {
 
 export interface ILayoutNode {
   children: ILayoutNode[];
-  type: string;
+  type: 'Text' | 'Image' | 'Block' | 'Repeat' | 'Shape';
+  parent: ILayoutNode;
   componentType: string;
   componentName: string;
   refComponentName: string;
@@ -24,7 +25,7 @@ export interface ILayoutNode {
   props: {
     attrs: ILayoutNodeAttr;
   }
-  style: Object;
+  style: any;
   modStyleConfig: {
     designWidth: number;
     designHeight: number;
@@ -49,3 +50,4 @@ export interface IParseResult {
   mainComp: ICompData;
   subComps: ICompData[];
 }
+

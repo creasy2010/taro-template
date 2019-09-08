@@ -1,5 +1,21 @@
 import { ILayoutNode } from "../typings";
 
+/**
+ * 样式去重处理器
+ **/
+
+export function test(node: ILayoutNode): boolean {
+  return !node.parent;
+}
+
+export function enter(node: ILayoutNode) {
+}
+
+export function exit(node: ILayoutNode) {
+  unifyClassName(node);
+}
+
+
 // 比较两个字符串， 取长度更短的那个
 // 用于className统一名称时取较短的名称
 function getShorterStr(str1: string, str2: string) {
@@ -32,11 +48,6 @@ function sortedStyleObjectAndToJsonStr(styleObject, type: string) {
       }
       break;
     case 'text':
-      // 以下属性不参text比较
-      // const ignoreAttrs = ['maxWidth', 'whiteSpace', 'lines', 'width', 'height'];
-      // ignoreAttrs.forEach(attr => {
-      //   delete newStyleObject[attr];
-      // });
       break;
     case 'picture':
       break;

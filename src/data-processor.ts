@@ -1,4 +1,5 @@
 import { ILayoutNode, IParseConfig } from "./typings";
+import visitors from './style-processors';
 
 /**
  * 处理布局数据中的图片url
@@ -67,68 +68,44 @@ const divideLayout = (data: ILayoutNode, config: IParseConfig) => {
   return componentNodes;
 }
 
-/**
- * 重命名className
- * 比如 block_2-->block; img_2,img_4,img_6-->img,img_1,img_2
- */
-const renameClassName = (data: ILayoutNode, config: IParseConfig) => {
-  let map = {};
-
-  const deal = (node, isRoot?: boolean) => {
-
-    // 引用结点不处理
-    if (!isRoot && node.refComponentName) return;
-
-    let className = node.attrs.className;
-    if (/_\d+$/.test(className)) {
-      // 扫描出样式以"_数字"结尾的结点，放入map
-      const pre = className.slice(0, className.lastIndexOf('_'));
-      node.attrs.className = pre;
-      className = pre;
-    }
-
-    if (map[className]) {
-      map[className].push(node);
-    } else {
-      map[className] = [node];
-    }
-
-    node.children.forEach(child => {
-      deal(child);
-    });
-  }
-
-  deal(data, true);
-
-  // 重命名样式
-  for (let key in map) {
-    for (let i = 0; i < map[key].length; i++) {
-      if (i != 0) {
-        map[key][i].attrs.className = map[key][i].attrs.className + i;
-      }
-    }
-  }
-
-  if (data.refComponentName) {
-    data.attrs.className = data.refComponentName;
-  } else {
-    data.attrs.className = config.pageName;
-  }
-}
-
 export default async (data: ILayoutNode, config: IParseConfig): Promise<ILayoutNode[]> => {
 
   // 处理图片
   dealImageUrl(data, config);
 
+  // 添加parent
+  init(data);
+
+  // 优化样式
+  dealNodeStyle(data);
+
   // 切分布局
   const nodes = divideLayout(data, config);
 
-  // 重命名className
-  renameClassName(data, config);
-  nodes.forEach(node => {
-    renameClassName(node, config);
-  });
-
   return nodes;
+}
+
+const init = (data: ILayoutNode) => {
+  addParent(data);
+}
+
+const addParent = (node: ILayoutNode) => {
+  const { display, flexDirection, justifyContent, alignItems } = node.style;
+  if (display === 'flex' && !flexDirection) node.style.flexDirection = 'row';
+  if (display === 'flex' && !justifyContent) node.style.justifyContent = 'flex-start';
+  if (display === 'flex' && !alignItems) node.style.alignItems = 'stretch';
+  node.children.forEach(child => {
+    child.parent = node;
+    addParent(child);
+  });
+}
+
+const dealNodeStyle = (node) => {
+  visitors.forEach(visitor => {
+    if (visitor.test(node)) visitor.enter(node);
+  });
+  node.children.forEach(child => dealNodeStyle(child));
+  visitors.forEach(visitor => {
+    if (visitor.test(node)) visitor.exit(node);
+  });
 }

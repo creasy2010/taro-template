@@ -1,13 +1,13 @@
 import { ICompData, ILayoutNode, IParseConfig } from "./typings";
-import unifyClassname from "./helper/unify-classname";
 import * as helper from "@imgcook/dsl-helper";
 import * as _ from "lodash";
+
+// compoundAttrs
 
 export default (layoutData: ILayoutNode, config: IParseConfig): ICompData => {
   const pageName = config.pageName;
 
   helper.clearInheritedAttr(layoutData, false);
-  unifyClassname(layoutData);
 
   if (layoutData.attrs.className === "root") {
     layoutData = layoutData.children[0];

@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "@imgcook/dsl-helper": "^0.0.1-alpha.0",
+    "fs-extra": "^8.1.0",
     "lodash": "^4.17.11",
     "prettier": "^1.11.1",
     "typescript": "^3.5.2",
