@@ -6,7 +6,7 @@ import * as RenameClassname from './rename-classname';
 import * as UnifyClassname from './unify-classname';
 import * as CommonStyle from './common-style';
 
-export default [
+const processors = [
   LayoutAdjust,
   LayoutSpacing,
   LayoutRmWh,
@@ -15,3 +15,13 @@ export default [
   UnifyClassname,
   CommonStyle
 ];
+
+export const processStyle = (node) => {
+  processors.forEach(visitor => {
+    if (visitor.test(node)) visitor.enter(node);
+  });
+  node.children.forEach(child => processStyle(child));
+  processors.forEach(visitor => {
+    if (visitor.test(node)) visitor.exit(node);
+  });
+};

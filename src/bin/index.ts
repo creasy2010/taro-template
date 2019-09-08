@@ -1,4 +1,4 @@
-import parser from '../index';
+import parser from '../parser';
 import { join } from "path";
 import { IParseConfig, IParseResult } from "../typings";
 import * as urllib from 'urllib';
@@ -13,6 +13,7 @@ let config: IParseConfig = {
   imgDir: './public/images/pages/'
 };
 
+config.pageName = config.pagePath.split('/').pop();
 parser(config).then((res: IParseResult) => {
   console.log(res.mainComp.imports);
   fsExtra.writeFile(`${join(config.pwd, './temp/')}${config.pageName}.less`, res.mainComp.style);
