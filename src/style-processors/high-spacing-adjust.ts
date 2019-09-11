@@ -1,8 +1,8 @@
 import { ILayoutNode } from "../typings";
-import { appendVal, val, sameVal } from "./utils";
+import { appendVal, sameVal, val } from "./utils";
 
 /**
- * 布局边距调整
+ * 垂直方向间距使用marginBottom、水平方向间距使用marginRight
  **/
 
 export function test(node: ILayoutNode): boolean {
@@ -11,8 +11,9 @@ export function test(node: ILayoutNode): boolean {
 
 export function enter(node: ILayoutNode) {
   let { style: { flexDirection }, children } = node;
-  // 行排列，左边距转右边距，外层加padding
   children = children.filter(child => child.style.position !== 'absolute');
+
+  // 水平方向间距使用marginRight，外层加padding
   if (flexDirection === 'row') {
     for (let i = 0; i < children.length; i++) {
       const childStyle = children[i].style;
@@ -24,7 +25,7 @@ export function enter(node: ILayoutNode) {
       }
       delete childStyle.marginLeft;
     }
-    if (children.length > 1) {
+    if (children.length > 2) {
       const preChilds = children.filter((_, idx) => idx != children.length - 1);
       const marginRight = sameVal(preChilds.map(child => child.style.marginRight));
       const lastChild = children[children.length - 1];
@@ -32,8 +33,10 @@ export function enter(node: ILayoutNode) {
         lastChild.style.marginRight = marginRight;
       }
     }
-  } else if(flexDirection === 'column') {
-    // 列排列，上边距转下边距，外层加padding
+  }
+
+  // 垂直方向间距使用marginBottom，外层加padding
+  if(flexDirection === 'column') {
     for (let i = 0; i < children.length; i++) {
       const childStyle = children[i].style;
       if (i == 0) {
@@ -56,10 +59,4 @@ export function enter(node: ILayoutNode) {
 }
 
 export function exit(node: ILayoutNode) {
-
-}
-
-
-function appendLastMargin() {
-
 }

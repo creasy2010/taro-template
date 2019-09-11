@@ -1,7 +1,7 @@
 import { ILayoutNode } from "../typings";
 
 /**
- * 布局结构修正
+ * 删除多余的宽高调整
  **/
 
 export function test(node: ILayoutNode): boolean {
@@ -12,5 +12,4 @@ export function enter(node: ILayoutNode) {
 }
 
 export function exit(node: ILayoutNode) {
-
 }

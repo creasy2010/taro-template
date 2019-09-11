@@ -98,6 +98,7 @@ function borderBoxHeight(node: ILayoutNode) {
  */
 export function borderBoxWidth(node: ILayoutNode, useWidth: boolean) {
   let { type, style: { width, flexDirection, paddingLeft, paddingRight, borderWidth } } = node;
+  if (type === 'Text') width = node.attrs.__ARGS__.width;
   if (width && useWidth) return width;
 
   if (type === 'Text') {
@@ -120,3 +121,59 @@ export function marginWidth(node: ILayoutNode) {
   return borderBoxWidth(node, true) + val(marginLeft) + val(marginRight);
 }
 
+export function contentWidth(node: ILayoutNode) {
+  const { borderWidth, paddingLeft, paddingRight } = node.style;
+  return borderBoxWidth(node, true) - val(borderWidth) * 2 - val(paddingLeft) - val(paddingRight);
+}
+
+export function delMarginPadding(style) {
+  delete style.marginTop;
+  delete style.marginBottom;
+  delete style.marginLeft;
+  delete style.marginRight;
+  delete style.paddingTop;
+  delete style.paddingBottom;
+  delete style.paddingLeft;
+  delete style.paddingRight;
+}
+
+export function delPadding(style) {
+  delete style.paddingTop;
+  delete style.paddingBottom;
+  delete style.paddingLeft;
+  delete style.paddingRight;
+}
+
+export function delMargin(style) {
+  delete style.marginTop;
+  delete style.marginBottom;
+  delete style.marginLeft;
+  delete style.marginRight;
+}
+
+export function calcNodeCoords(node: ILayoutNode) {
+  let coords = [];
+  const { x, y, width, height } = node.attrs.__ARGS__;
+  // 顶点坐标
+  coords.push({ x, y });
+  // 右上点坐标
+  coords.push({ x: x + width, y });
+  // 右下点坐标
+  coords.push({ x: x + width, y: y + height });
+  // 左下点坐标
+  coords.push({ x, y: y + height });
+  return coords;
+}
+
+export function calcAbsPosition(outer: ILayoutNode, inner: ILayoutNode) {
+  const samePosition = (source, target) => {
+    return source.x == target.x && source.y == target.y;
+  }
+  const iCoords = calcNodeCoords(inner);
+  const oCoords = calcNodeCoords(outer);
+  if (samePosition(iCoords[0], oCoords[0])) return { top: 0, left: 0 };
+  if (samePosition(iCoords[1], oCoords[1])) return { top: 0, right: 0 };
+  if (samePosition(iCoords[2], oCoords[2])) return { bottom: 0, right: 0 };
+  if (samePosition(iCoords[3], oCoords[3])) return { bottom: 0, left: 0 };
+  return null;
+}

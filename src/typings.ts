@@ -38,6 +38,14 @@ export interface ILayoutNodeAttr {
   className: string;
   src?: string;
   source?: string;
+  __ARGS__: IPosition
+}
+
+export interface IPosition {
+  x: number,
+  y: number,
+  width: number,
+  height: number
 }
 
 export interface ICompData {

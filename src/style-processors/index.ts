@@ -1,19 +1,21 @@
-import * as LayoutAdjust from './layout-adjust';
-import * as LayoutSpacing from './layout-spacing';
-import * as LayoutRmWh from './layout-rm-wh';
-import * as NodeExtraAttrs from './node-extra-attrs';
-import * as RenameClassname from './rename-classname';
-import * as UnifyClassname from './unify-classname';
-import * as CommonStyle from './common-style';
+import * as HighColumnLayoutAdjust from './high-column-layout-adjust';
+import * as HighRowLayoutAdjust from './high-row-layout-adjust';
+import * as HighSpacingAdjust from './high-spacing-adjust';
+import * as HighButtonAdjust from './high-button-adjust';
+import * as HighMultilineItemsAdjust from './high-multiline-items-adjust';
+import * as LowRmExtraAttrs from './low-rm-extra-attrs';
+import * as CommonRenameClassname from './common-rename-classname';
+import * as CommonUnifyClassname from './common-unify-classname';
 
 const processors = [
-  LayoutAdjust,
-  LayoutSpacing,
-  LayoutRmWh,
-  NodeExtraAttrs,
-  RenameClassname,
-  UnifyClassname,
-  CommonStyle
+  HighColumnLayoutAdjust,
+  HighRowLayoutAdjust,
+  HighSpacingAdjust,
+  HighButtonAdjust,
+  HighMultilineItemsAdjust,
+  LowRmExtraAttrs,
+  CommonRenameClassname,
+  CommonUnifyClassname
 ];
 
 export const processStyle = (node) => {
