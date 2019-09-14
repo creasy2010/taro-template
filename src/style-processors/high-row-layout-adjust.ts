@@ -1,5 +1,5 @@
 import { ILayoutNode } from "../typings";
-import { appendVal, contentWidth, marginWidth, val, newNode } from "./utils";
+import { appendVal, contentBoxWidth, marginBoxWidth, val, newNode } from "./utils";
 
 /**
  * row方向布局，尽量不使用center
@@ -23,8 +23,8 @@ export function enter(node: ILayoutNode) {
   if (justifyContent === 'center') {
     // 1.先将center转为flex-start
     node.style.justifyContent = 'flex-start';
-    const childrenWidth = node.children.reduce((total, child) => total + marginWidth(child), 0);
-    const paddingLR = Math.round((contentWidth(node) - childrenWidth) / 2);
+    const childrenWidth = node.children.reduce((total, child) => total + marginBoxWidth(child), 0);
+    const paddingLR = Math.round((contentBoxWidth(node) - childrenWidth) / 2);
     appendVal(node.style, 'paddingLeft', paddingLR);
     appendVal(node.style, 'paddingRight', paddingLR);
     console.log(`结点${node.attrs.className}由布局row.center转为row.flex-start`);

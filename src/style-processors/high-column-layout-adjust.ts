@@ -1,5 +1,5 @@
 import { ILayoutNode } from "../typings";
-import { appendVal, contentHeight, marginHeight } from "./utils";
+import { appendVal, contentBoxHeight, marginBoxHeight } from "./utils";
 
 /**
  * column方向布局，不使用space-between、space-around
@@ -17,8 +17,8 @@ export function enter(node: ILayoutNode) {
     // 将space-between转为flex-start
     node.style.justifyContent = 'flex-start';
     // 给子结点加marginTop fixme
-    const childrenHeight = node.children.reduce((total, child) => total + marginHeight(child), 0);
-    const marginTop = Math.round((contentHeight(node) - childrenHeight) / (node.children.length - 1));
+    const childrenHeight = node.children.reduce((total, child) => total + marginBoxHeight(child), 0);
+    const marginTop = Math.round((contentBoxHeight(node) - childrenHeight) / (node.children.length - 1));
     node.children.forEach((child, idx) => {
       if (idx > 0) appendVal(child.style, 'marginTop', marginTop);
     });
@@ -29,8 +29,8 @@ export function enter(node: ILayoutNode) {
     // 将space-around转为flex-start
     node.style.justifyContent = 'flex-start';
     // 给结点加paddingTB、子结点加marginTop fixme
-    const childrenHeight = node.children.reduce((total, child) => total + marginHeight(child), 0);
-    const spacing = Math.round((contentHeight(node) - childrenHeight) / node.children.length);
+    const childrenHeight = node.children.reduce((total, child) => total + marginBoxHeight(child), 0);
+    const spacing = Math.round((contentBoxHeight(node) - childrenHeight) / node.children.length);
     node.children.forEach((child, idx) => {
       if (idx > 0) appendVal(child.style, 'marginTop', spacing);
     });

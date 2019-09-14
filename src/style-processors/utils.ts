@@ -29,73 +29,6 @@ export function val(value) {
   return value ? value : 0;
 }
 
-export function contentHeight(node: ILayoutNode) {
-  const { borderWidth, paddingTop, paddingBottom } = node.style;
-  return borderBoxHeight(node) - val(borderWidth) * 2 - val(paddingTop) - val(paddingBottom);
-}
-
-export function marginHeight(node: ILayoutNode) {
-  const { marginTop, marginBottom } = node.style;
-  return borderBoxHeight(node) + val(marginTop) + val(marginBottom);
-}
-
-/**
- * 计算一个结点的高度
- */
-function borderBoxHeight(node: ILayoutNode) {
-  let { type, style: { fontSize, lineHeight, height, lines, flexDirection } } = node;
-  const { paddingTop, paddingBottom, borderWidth } = node.style;
-
-  if (height) return height;
-
-  if (type === 'Text') {
-    height = (lineHeight ? lineHeight : fontSize) * lines;
-  } else if (isContainer(type)) {
-    if (flexDirection === 'row') {
-      height = node.children.map(child => marginHeight(child)).sort().reverse()[0];
-    } else if(flexDirection === 'column') {
-      height = node.children.reduce((total, child) => total + marginHeight(child), 0);
-    } else {
-      console.error('非row、column的容器');
-    }
-  }
-  height = height + val(paddingTop) + val(paddingBottom) + val(borderWidth) * 2;
-  return height;
-}
-
-/**
- * 计算一个结点宽度
- */
-export function borderBoxWidth(node: ILayoutNode, useWidth: boolean) {
-  let { type, style: { width, flexDirection, paddingLeft, paddingRight, borderWidth } } = node;
-  if (type === 'Text') width = node.attrs.__ARGS__.width;
-  if (width && useWidth) return width;
-
-  if (type === 'Text') {
-    return NaN;
-  } else if (isContainer(type)) {
-    if (flexDirection === 'row') {
-      width = node.children.reduce((total, child) => total + marginWidth(child), 0);
-    } else if(flexDirection === 'column') {
-      width = node.children.map(child => marginWidth(child)).sort().reverse()[0];
-    } else {
-      console.error('非row、column的容器');
-    }
-  }
-  width = width + val(paddingLeft) + val(paddingRight) + val(borderWidth) * 2;
-  return width;
-}
-
-export function marginWidth(node: ILayoutNode) {
-  const { marginLeft, marginRight } = node.style;
-  return borderBoxWidth(node, true) + val(marginLeft) + val(marginRight);
-}
-
-export function contentWidth(node: ILayoutNode) {
-  const { borderWidth, paddingLeft, paddingRight } = node.style;
-  return borderBoxWidth(node, true) - val(borderWidth) * 2 - val(paddingLeft) - val(paddingRight);
-}
-
 export function delMarginPadding(style) {
   delete style.marginTop;
   delete style.marginBottom;
@@ -195,3 +128,31 @@ export function calcVMargin(source: ILayoutNode, target: ILayoutNode) {
 export function calcHPadding(outer: ILayoutNode, inner: ILayoutNode) {
   return inner.attrs.__ARGS__.y - outer.attrs.__ARGS__.y;
 }
+
+
+export function borderBoxWidth(node: ILayoutNode) {
+  return node.attrs.__ARGS__.width;
+}
+
+export function borderBoxHeight(node: ILayoutNode) {
+  return node.attrs.__ARGS__.height;
+}
+
+export function marginBoxWidth(node: ILayoutNode) {
+  return val(node.style.marginLeft) + borderBoxWidth(node) + val(node.style.marginRight);
+}
+
+export function marginBoxHeight(node: ILayoutNode) {
+  return val(node.style.marginTop) + borderBoxHeight(node) + val(node.style.marginBottom);
+}
+
+export function contentBoxWidth(node: ILayoutNode) {
+  const { borderWidth, paddingLeft, paddingRight } = node.style;
+  return borderBoxWidth(node) - val(borderWidth) * 2 - val(paddingLeft) - val(paddingRight);
+}
+
+export function contentBoxHeight(node: ILayoutNode) {
+  const { borderWidth, paddingTop, paddingBottom } = node.style;
+  return borderBoxHeight(node) - val(borderWidth) * 2 - val(paddingTop) - val(paddingBottom);
+}
+

@@ -1,5 +1,5 @@
 import { ILayoutNode } from "../typings";
-import { borderBoxWidth } from './utils';
+import { marginBoxWidth, marginBoxHeight, contentBoxWidth, contentBoxHeight } from "./utils";
 
 /**
  * 删除多余的宽高调整
@@ -11,35 +11,47 @@ export function test(node: ILayoutNode): boolean {
 
 export function enter(node: ILayoutNode) {
 
-  // 宽度
+  const childrenWidth = (node: ILayoutNode) => {
+    const flexDirection = node.style.flexDirection;
+    if (flexDirection === 'row') {
+      // 宽度和
+      return node.children.reduce((total, child) => total + marginBoxWidth(child), 0);
+    } else if(flexDirection === 'column') {
+      // 宽度最大值
+      return node.children.map(child => marginBoxWidth(child)).sort().reverse()[0];
+    }
+  };
+  const childrenHeight = (node: ILayoutNode) => {
+    const flexDirection = node.style.flexDirection;
+    if (flexDirection === 'column') {
+      // 高度和
+      return node.children.reduce((total, child) => total + marginBoxHeight(child), 0);
+    } else if(flexDirection === 'row') {
+      // 高度最大值
+      return node.children.map(child => marginBoxHeight(child)).sort().reverse()[0];
+    }
+  };
+
+  // 文本不设宽高
   if (node.type === 'Text') {
     delete node.style.width;
-    console.log(`结点${node.attrs.className}删除文本宽度`);
+    delete node.style.height;
   }
+
   if (node.type === 'Block') {
+    // 子结点宽高等于当前结点内容宽高
+    if (node.style.justifyContent === 'flex-start') {
+      if (childrenWidth(node) == contentBoxWidth(node)) delete node.style.width;
+      if (childrenHeight(node) == contentBoxHeight(node)) delete node.style.height;
+    }
+    // 父结点column布局并设置了stretch
     if (node.parent
       && node.parent.style.flexDirection === 'column'
       && node.parent.style.alignItems === 'stretch') {
-      // 父容器给了宽度，父容器为column布局、streach；
       delete node.style.width;
-      console.log(`结点${node.attrs.className}删除块宽度`);
-    }
-    if (borderBoxWidth(node, false) == node.style.width) {
-      // 内部元素可以撑开宽度，内部元素水平方向宽度和等于当前元素宽度(用坐标宽度)
-      delete node.style.width;
-      console.log(`结点${node.attrs.className}删除块宽度`);
     }
   }
-  // 高度
-  if (node.type === 'Text') {
-    delete node.style.height;
-    console.log(`结点${node.attrs.className}删除文本高度`);
-  }
-  if (node.type === 'Block') {
-    delete node.style.height;
-    console.log(`结点${node.attrs.className}删除块高度`);
-  }
-
+  console.log(`结点${node.attrs.className}删除宽度`);
 }
 
 export function exit(node: ILayoutNode) {

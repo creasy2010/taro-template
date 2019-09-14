@@ -1,5 +1,5 @@
 import { ILayoutNode } from "../typings";
-import { calcAbsPosition, delMarginPadding, delPadding, marginWidth } from "./utils";
+import { calcAbsPosition, delMarginPadding, delPadding, marginBoxWidth } from "./utils";
 
 /**
  * button类型结点样式调整
@@ -46,7 +46,7 @@ export function enter(node: ILayoutNode) {
       delete iconNode[0].style.marginTop;
       delete iconNode[0].style.marginBottom;
     }
-    const contentWidth = marginWidth(textNode[0]) + (iconNode[0] ? marginWidth(iconNode[0]) : 0);
+    const contentWidth = marginBoxWidth(textNode[0]) + (iconNode[0] ? marginBoxWidth(iconNode[0]) : 0);
     const paddingRL = Math.floor((node.attrs.__ARGS__.width - contentWidth) / 2);
 
     node.style.alignItems = 'center';
