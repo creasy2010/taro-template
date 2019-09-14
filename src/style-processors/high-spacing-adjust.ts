@@ -29,6 +29,7 @@ export function enter(node: ILayoutNode) {
       const preChilds = children.filter((_, idx) => idx != children.length - 1);
       const marginRight = sameVal(preChilds.map(child => child.style.marginRight));
       const lastChild = children[children.length - 1];
+      // fixme 最后一个结点加margin的条件还要调
       if (marginRight && !lastChild.style.marginRight) {
         lastChild.style.marginRight = marginRight;
       }
