@@ -1,4 +1,4 @@
-import { ILayoutNode } from "../typings";
+import { ILayoutNode, ILayoutNodeAttr, IStyle } from "../typings";
 
 export function delKeys(keys: string[], obj) {
   keys.forEach(key => delete obj[key]);
@@ -8,36 +8,6 @@ export function isContainer(type: string) {
   return ['Block','Repeat', 'Shape'].includes(type);
 }
 
-export function isSameNodes(nodes: ILayoutNode[], ignoreKeys: string[] = [], includeKeys: string[]) {
-
-  if (ignoreKeys.length > 0 && includeKeys.length > 0) {
-    throw new Error('不可以同时传ignoreKeys和includeKeys');
-  }
-
-  let styleMap = {};
-  nodes.forEach(node => {
-    const style = node.style;
-    Object.keys(style).forEach(key => {
-      if (ignoreKeys && ignoreKeys.includes(key)) return;
-      if (includeKeys && !includeKeys.includes(key)) return;
-      if (style[key]) {
-        if (styleMap[key]) {
-          styleMap[key].push(style[key]);
-        } else {
-          styleMap[key] = [style[key]];
-        }
-      }
-    });
-  });
-
-  const styleMapKeys = Object.keys(styleMap);
-  for (let i = 0; i < styleMapKeys.length; i++) {
-    if (styleMap[styleMapKeys[i]].length != nodes.length) {
-      return false;
-    }
-  }
-  return true;
-}
 
 export function sameVal(values: number[], precision = 0.2) {
   if (!values || values.length == 0) {
@@ -176,4 +146,52 @@ export function calcAbsPosition(outer: ILayoutNode, inner: ILayoutNode) {
   if (samePosition(iCoords[2], oCoords[2])) return { bottom: 0, right: 0 };
   if (samePosition(iCoords[3], oCoords[3])) return { bottom: 0, left: 0 };
   return null;
+}
+
+
+export function newNode({ parent = null, children = [], type }): ILayoutNode {
+  // fixme attrs需要计算
+  return {
+    children,
+    type,
+    parent,
+    attrs: {
+      __ARGS__: { x:null, y:null, width:null, height:null }
+    },
+    style: {}
+  }
+}
+
+export function match(matchStr, regex) {
+  let match, result = [];
+  while (match = regex.exec(matchStr)) {
+    result.push({
+      index: match.index,
+      match: match[0]
+    });
+  }
+  return result;
+}
+
+/**
+ * 计算两块间的水平间距
+ */
+export function calcHMargin(source: ILayoutNode, target: ILayoutNode) {
+  const { x, width } = source.attrs.__ARGS__;
+  return target.attrs.__ARGS__.x - (x + width);
+}
+
+/**
+ * 计算两块间的垂直间距
+ */
+export function calcVMargin(source: ILayoutNode, target: ILayoutNode) {
+  const { y, height } = source.attrs.__ARGS__;
+  return target.attrs.__ARGS__.y - (y + height);
+}
+
+/**
+ * 计算两款间的内左边距
+ */
+export function calcHPadding(outer: ILayoutNode, inner: ILayoutNode) {
+  return inner.attrs.__ARGS__.y - outer.attrs.__ARGS__.y;
 }

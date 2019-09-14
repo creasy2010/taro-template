@@ -1,4 +1,3 @@
-
 export interface IParseConfig {
   moduleId: string;
   pagePath: string;
@@ -9,36 +8,24 @@ export interface IParseConfig {
   imgDir?: string;
 }
 
-export interface ILayoutData {
-  data: ILayoutNode;
-  originData: any; // originData目前没用到
-}
-
 export interface ILayoutNode {
   children: ILayoutNode[];
   type: 'Text' | 'Image' | 'Block' | 'Repeat' | 'Shape';
   parent: ILayoutNode;
-  componentType: string;
-  componentName: string;
-  refComponentName: string;
   attrs: ILayoutNodeAttr;
-  props: {
-    attrs: ILayoutNodeAttr;
-  }
-  style: any;
-  modStyleConfig: {
-    designWidth: number;
-    designHeight: number;
-  };
-  dataBindingStore?: any[];
-  innerText: string;
+  style: IStyle;
+  innerText?: string;
+  // fixme 以下属性后面尝试删除
+  componentType?: string;
+  componentName?: string;
+  refComponentName?: string;
 }
 
 export interface ILayoutNodeAttr {
-  className: string;
+  className?: string;
   src?: string;
   source?: string;
-  __ARGS__: IPosition
+  __ARGS__?: IPosition
 }
 
 export interface IPosition {
@@ -58,5 +45,32 @@ export interface ICompData {
 export interface IParseResult {
   mainComp: ICompData;
   subComps: ICompData[];
+}
+
+export interface IStyle {
+  justifyContent?: string;
+  alignItems?: string;
+  display?: string;
+  position?: string;
+  flexDirection?: string;
+  flexWrap?: string;
+  paddingTop?: number;
+  paddingBottom?: number;
+  paddingRight?: number;
+  paddingLeft?: number;
+  marginTop?: number;
+  marginBottom?: number;
+  marginRight?: number;
+  marginLeft?: number;
+  width?: number | string;
+  height?: number;
+  lineHeight?: number;
+  fontSize?: number;
+  fontWeight?: number;
+  borderWidth?: number;
+  borderRadius?: number;
+  backgroundColor?: string;
+  backgroundImage?: string;
+  lines?: number;
 }
 

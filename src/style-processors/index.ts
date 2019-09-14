@@ -2,6 +2,7 @@ import * as HighColumnLayoutAdjust from './high-column-layout-adjust';
 import * as HighRowLayoutAdjust from './high-row-layout-adjust';
 import * as HighSpacingAdjust from './high-spacing-adjust';
 import * as HighButtonAdjust from './high-button-adjust';
+import * as HighMultiColumnList from './high-multi-column-list';
 import * as HighMultilineItemsAdjust from './high-multiline-items-adjust';
 import * as LowRmExtraAttrs from './low-rm-extra-attrs';
 import * as CommonRenameClassname from './common-rename-classname';
@@ -12,6 +13,7 @@ const processors = [
   HighRowLayoutAdjust,
   HighSpacingAdjust,
   HighButtonAdjust,
+  HighMultiColumnList,
   HighMultilineItemsAdjust,
   LowRmExtraAttrs,
   CommonRenameClassname,

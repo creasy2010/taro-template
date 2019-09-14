@@ -18,8 +18,6 @@ const dealImg = (config: IParseConfig, data: ILayoutNode) => {
       const imgSrc = downloadImg(data.attrs.src);
       data.attrs.src = imgSrc;
       data.attrs.source = imgSrc;
-      data.props.attrs.src = imgSrc;
-      data.props.attrs.source = imgSrc;
     }
     // 递归处理子节点
     data.children && data.children.forEach(i => {
@@ -40,10 +38,6 @@ const dealImg = (config: IParseConfig, data: ILayoutNode) => {
   // 1.递归处理图片结点并下载图片
   dealImage(data);
 
-  // 2.去掉数据绑定字段
-  if (data.dataBindingStore) {
-    data.dataBindingStore = [];
-  }
 }
 
 /**
