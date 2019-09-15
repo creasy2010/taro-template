@@ -10,8 +10,8 @@ export function test(node: ILayoutNode): boolean {
   const length = children.filter(child => child.style.position !== 'absolute').length;
   if (flexDirection === 'row') {
     // if (['space-between', 'space-around'].includes(justifyContent) && length > 2) return true;
-    // fixme
-    if (['center'].includes(justifyContent) && length > 2) return true;
+    // TODO 直接大于1会有问题，按钮~
+    if (['center'].includes(justifyContent) && length > 1) return true;
   }
   return false;
 }

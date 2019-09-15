@@ -13,6 +13,8 @@ export function enter(node: ILayoutNode) {
   const { style: { flexDirection, justifyContent, width, borderWidth, backgroundColor, backgroundImage }, children } = node;
   if (flexDirection === 'row' && !['space-between', 'space-around'].includes(justifyContent)
     && children.length <= 3
+    // fixme 这边直接使用了长度100
+    && node.attrs.__ARGS__.width < 100
     && (width || borderWidth || backgroundColor || backgroundImage && backgroundImage.startsWith('linear-gradient'))) {
 
     // 1.结点类型判定

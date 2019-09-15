@@ -68,16 +68,21 @@ export function calcNodeCoords(node: ILayoutNode) {
   return coords;
 }
 
-export function calcAbsPosition(outer: ILayoutNode, inner: ILayoutNode) {
+export function calcAbsPosition(outer: ILayoutNode, inner: ILayoutNode, precision = 0) {
+
+  const precisionX = inner.attrs.__ARGS__.width * precision;
+  const precisionY = inner.attrs.__ARGS__.height * precision;
+
   const samePosition = (source, target) => {
-    return source.x == target.x && source.y == target.y;
+    return Math.abs(source.x - target.x) <= precisionX
+      && Math.abs(source.y- target.y) <= precisionY;
   }
   const iCoords = calcNodeCoords(inner);
   const oCoords = calcNodeCoords(outer);
-  if (samePosition(iCoords[0], oCoords[0])) return { top: 0, left: 0 };
-  if (samePosition(iCoords[1], oCoords[1])) return { top: 0, right: 0 };
-  if (samePosition(iCoords[2], oCoords[2])) return { bottom: 0, right: 0 };
-  if (samePosition(iCoords[3], oCoords[3])) return { bottom: 0, left: 0 };
+  if (samePosition(iCoords[0], oCoords[0])) return { top: 0, left: 0, type: 0 };
+  if (samePosition(iCoords[1], oCoords[1])) return { top: 0, right: 0, type: 1 };
+  if (samePosition(iCoords[2], oCoords[2])) return { bottom: 0, right: 0, type: 2 };
+  if (samePosition(iCoords[3], oCoords[3])) return { bottom: 0, left: 0, type: 3 };
   return null;
 }
 

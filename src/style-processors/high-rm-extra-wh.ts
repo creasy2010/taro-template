@@ -18,7 +18,7 @@ export function enter(node: ILayoutNode) {
       return node.children.reduce((total, child) => total + marginBoxWidth(child), 0);
     } else if(flexDirection === 'column') {
       // 宽度最大值
-      return node.children.map(child => marginBoxWidth(child)).sort().reverse()[0];
+      return node.children.map(child => marginBoxWidth(child)).sort((a, b) => b - a)[0];
     }
   };
   const childrenHeight = (node: ILayoutNode) => {

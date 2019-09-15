@@ -52,6 +52,10 @@ export interface IStyle {
   alignItems?: string;
   display?: string;
   position?: string;
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
   flexDirection?: string;
   flexWrap?: string;
   paddingTop?: number;
