@@ -6,7 +6,7 @@ import { ILayoutNode } from "../typings";
  **/
 
 export function test(node: ILayoutNode): boolean {
-  return false;
+  return !node.parent;
 }
 
 export function enter(node: ILayoutNode) {
@@ -14,48 +14,38 @@ export function enter(node: ILayoutNode) {
 
 // fixme 换位置后，重命名样式在切分布局之上，要调整逻辑；后面考虑换地方
 export function exit(data: ILayoutNode) {
+  console.log('样式重命名处理器');
 
   let map = {};
-
-  const deal = (node, isRoot?: boolean) => {
-
-    // 引用结点不处理
-    if (!isRoot && node.refComponentName) return;
-
+  const deal = (node) => {
     let className = node.attrs.className;
-    if (/_\d+$/.test(className)) {
-      // 扫描出样式以"_数字"结尾的结点，放入map
-      const pre = className.slice(0, className.lastIndexOf('_'));
-      node.attrs.className = pre;
-      className = pre;
-    }
-
-    if (map[className]) {
-      map[className].push(node);
+    const pre = className.lastIndexOf('_') == -1 ? className: className.slice(0, className.lastIndexOf('_'));
+    if (map[pre]) {
+      map[pre].push(node);
     } else {
-      map[className] = [node];
+      map[pre] = [node];
     }
-
     node.children.forEach(child => {
       deal(child);
     });
   }
-
-  deal(data, true);
+  deal(data);
 
   // 重命名样式
   for (let key in map) {
-    for (let i = 0; i < map[key].length; i++) {
-      if (i != 0) {
-        map[key][i].attrs.className = map[key][i].attrs.className + i;
+    let idx = -1, curKey = null;
+    const nodes = map[key].sort((a, b) => a.attrs.className > b.attrs.className);
+    for (let i = 0; i < nodes.length; i++) {
+      if (curKey != nodes[i].attrs.className) {
+        idx++;
+        curKey = nodes[i].attrs.className;
+      }
+      if (idx == 0) {
+        nodes[i].attrs.className = key;
+      } else {
+        nodes[i].attrs.className = key + idx;
       }
     }
-  }
-
-  if (data.refComponentName) {
-    data.attrs.className = data.refComponentName;
-  } else {
-    data.attrs.className = 'index';
   }
 
 }

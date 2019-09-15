@@ -1,5 +1,5 @@
 import { ILayoutNode } from "../typings";
-import { marginBoxWidth, marginBoxHeight, contentBoxWidth, contentBoxHeight } from "./utils";
+import { marginBoxWidth, marginBoxHeight, contentBoxWidth, contentBoxHeight, isContainer } from "./utils";
 
 /**
  * 删除多余的宽高调整
@@ -36,22 +36,33 @@ export function enter(node: ILayoutNode) {
   if (node.type === 'Text') {
     delete node.style.width;
     delete node.style.height;
+    console.log(`结点${node.attrs.className}删除文本宽高`);
   }
 
-  if (node.type === 'Block') {
+  if (isContainer(node.type)) {
     // 子结点宽高等于当前结点内容宽高
     if (node.style.justifyContent === 'flex-start') {
-      if (childrenWidth(node) == contentBoxWidth(node)) delete node.style.width;
-      if (childrenHeight(node) == contentBoxHeight(node)) delete node.style.height;
+      if (childrenWidth(node) == contentBoxWidth(node)) {
+        delete node.style.width;
+        console.log(`结点${node.attrs.className}删除宽度`);
+      }
+      if (childrenHeight(node) == contentBoxHeight(node)) {
+        delete node.style.height;
+        console.log(`结点${node.attrs.className}删除高度`);
+      }
     }
     // 父结点column布局并设置了stretch
+    if (node.attrs.className == 'hd') {
+      console.log(`parent: ${JSON.stringify(node.parent.style)}`);
+    }
     if (node.parent
       && node.parent.style.flexDirection === 'column'
       && node.parent.style.alignItems === 'stretch') {
       delete node.style.width;
+
+      console.log(`结点${node.attrs.className}删除宽度`);
     }
   }
-  console.log(`结点${node.attrs.className}删除宽度`);
 }
 
 export function exit(node: ILayoutNode) {

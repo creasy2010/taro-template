@@ -1,5 +1,5 @@
 import { ILayoutNode } from "../typings";
-import { appendVal, contentBoxHeight, marginBoxHeight } from "./utils";
+import { appendVal, contentBoxHeight, marginBoxHeight, borderBoxWidth, contentBoxWidth } from "./utils";
 
 /**
  * column方向布局，不使用space-between、space-around

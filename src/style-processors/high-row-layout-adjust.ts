@@ -40,7 +40,6 @@ export function enter(node: ILayoutNode) {
     for (let i = 0; i < node.children.length; i++) {
       if (i == 0) continue;
       const spacing = val(node.children[i].style.marginLeft) + val(node.children[i - 1].style.marginRight);
-      console.log(`spacing: ${spacing}`);
       if (spacing < fivePerc) continue;
       if (spacing > twentyPerc) {
         if (splitIdx != null) return;
@@ -51,8 +50,6 @@ export function enter(node: ILayoutNode) {
 
     const headNodes = node.children.slice(0, splitIdx);
     const tailNodes = node.children.slice(splitIdx);
-
-    console.log(`${splitIdx}  ${headNodes.length}   ${tailNodes.length}`);
 
     delete headNodes[headNodes.length - 1].style.marginRight;
     let headBlock = headNodes[0];

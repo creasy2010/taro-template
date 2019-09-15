@@ -123,7 +123,7 @@ export function calcVMargin(source: ILayoutNode, target: ILayoutNode) {
 }
 
 /**
- * 计算两款间的内左边距
+ * 计算两块间的内左边距
  */
 export function calcHPadding(outer: ILayoutNode, inner: ILayoutNode) {
   return inner.attrs.__ARGS__.y - outer.attrs.__ARGS__.y;

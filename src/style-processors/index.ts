@@ -1,4 +1,5 @@
-import * as HighColumnLayoutAdjust from './high-column-layout-adjust';
+import * as HighColumnVerAdjust from './high-column-ver-adjust';
+import * as HighColumnHorAdjust from './high-column-hor-adjust';
 import * as HighRowLayoutAdjust from './high-row-layout-adjust';
 import * as HighSpacingAdjust from './high-spacing-adjust';
 import * as HighButtonAdjust from './high-button-adjust';
@@ -10,7 +11,8 @@ import * as CommonRenameClassname from './common-rename-classname';
 import * as CommonUnifyClassname from './common-unify-classname';
 
 const processors = [
-  HighColumnLayoutAdjust,
+  HighColumnVerAdjust,
+  HighColumnHorAdjust,
   HighRowLayoutAdjust,
   HighSpacingAdjust,
   HighButtonAdjust,
@@ -18,8 +20,8 @@ const processors = [
   HighMultilineItemsAdjust,
   HighRmExtraWh,
   LowRmExtraAttrs,
-  CommonRenameClassname,
-  CommonUnifyClassname
+  CommonUnifyClassname,
+  CommonRenameClassname
 ];
 
 export const processStyle = (node) => {
