@@ -50,13 +50,17 @@ export default (data: ILayoutNode, config: IParseConfig): ICompData => {
   // 生成style
   const lines = [];
   const transVal = val => {
-   return val ? val : 0;
+    if (!Number(val) && Number(val) != 0) {
+      return `'${val}'`;
+    } else {
+      return val;
+    }
   }
   lines.push(line('const styles = StyleSheet.create({', 0));
   styleArr.forEach((item, idx) => {
-      lines.push(line(`${item.className} {`, 1));
+      lines.push(line(`${item.className}: {`, 1));
       Object.keys(item.style).forEach(key => {
-        lines.push(line(`${key}: ${transVal(item.style[key])};`, 2));
+        lines.push(line(`${key}: ${transVal(item.style[key])},`, 2));
       });
       lines.push(line(`},`, 1));
   })
