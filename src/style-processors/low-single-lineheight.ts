@@ -13,7 +13,7 @@ export function enter(node: ILayoutNode) {
 }
 
 export function exit(node: ILayoutNode) {
-  // node.style.lineHeight = 1;
+  node.style.lineHeight = 1;
   const rmLineHeight = (node: ILayoutNode) => {
     const { fontSize, lineHeight } = node.style;
     if (fontSize == lineHeight) delete node.style.lineHeight;

@@ -30,7 +30,7 @@ export default (data: ILayoutNode, config: IParseConfig): ICompData => {
     }
     let attrStr = '';
     attrStr += node.attrs.src ? ` src='${node.attrs.src}'` : '';
-    attrStr += node.attrs.className ? ` class='${node.attrs.className}'` : '';
+    attrStr += node.attrs.className ? ` class="c${node.attrs.className}"` : '';
 
     if (node.innerText) {
       lines.push(line(`<${nodeType}${attrStr}>${node.innerText}</${nodeType}>`, level));
@@ -53,21 +53,30 @@ export default (data: ILayoutNode, config: IParseConfig): ICompData => {
   const transKey = str => {
     return str.replace(/\B([A-Z])/g, '-$1').toLowerCase()
   }
-  const transVal = val => {
+  // const transVal = val => {
+  //   val = val ? val : 0;
+  //   if (typeof(val) === 'number') val = val * 2 + 'px';
+  //   return val;
+  // }
+  const transVal = (key, val) => {
     val = val ? val : 0;
-    if (typeof(val) === 'number') val = val * 2 + 'px';
+    if (typeof(val) === 'number'
+      && !(key === 'lineHeight' && val < 5)) {
+      val = val / 50 + 'rem';
+    }
     return val;
   }
+
   styleArr.forEach(item => delete item.style.lines);
-  lines.push(line(`.${styleArr[0].className} {`, 0));
+  lines.push(line(`.c${styleArr[0].className} {`, 0));
   Object.keys(styleArr[0].style).forEach(key => {
-    lines.push(line(`${transKey(key)}: ${transVal(styleArr[0].style[key])};`, 1));
+    lines.push(line(`${transKey(key)}: ${transVal(key, styleArr[0].style[key])};`, 1));
   });
   styleArr.forEach((item, idx) => {
     if (idx > 0) {
-      lines.push(line(`.${item.className} {`, 1));
+      lines.push(line(`.c${item.className} {`, 1));
       Object.keys(item.style).forEach(key => {
-        lines.push(line(`${transKey(key)}: ${transVal(item.style[key])};`, 2));
+        lines.push(line(`${transKey(key)}: ${transVal(key, item.style[key])};`, 2));
       });
       lines.push(line(`}`, 1));
     }
