@@ -1,5 +1,21 @@
 import { ILayoutNode } from "../typings";
 
+/**
+ * 样式去重处理器
+ **/
+
+export function test(node: ILayoutNode): boolean {
+  return !node.parent;
+}
+
+export function enter(node: ILayoutNode) {
+}
+
+export function exit(node: ILayoutNode) {
+  unifyClassName(node);
+}
+
+
 // 比较两个字符串， 取长度更短的那个
 // 用于className统一名称时取较短的名称
 function getShorterStr(str1: string, str2: string) {
@@ -12,7 +28,7 @@ function getShorterStr(str1: string, str2: string) {
 }
 
 // style对象按属性名排序，并转成JSON对象
-function sortedStyleObjectAndToJsonStr(styleObject, type: string) {
+function sortedStyleObjectAndToJsonStr(styleObject) {
   if (!styleObject || typeof styleObject != 'object') return;
 
   const attrNames = Object.keys(styleObject);
@@ -23,25 +39,6 @@ function sortedStyleObjectAndToJsonStr(styleObject, type: string) {
   attrNames.forEach(name => {
     newStyleObject[name] = styleObject[name];
   });
-
-  switch (type) {
-    case 'view':
-      if (newStyleObject.position === 'relative') {
-        // view比较时，position='relative'不参与比较
-        delete newStyleObject.position;
-      }
-      break;
-    case 'text':
-      // 以下属性不参text比较
-      // const ignoreAttrs = ['maxWidth', 'whiteSpace', 'lines', 'width', 'height'];
-      // ignoreAttrs.forEach(attr => {
-      //   delete newStyleObject[attr];
-      // });
-      break;
-    case 'picture':
-      break;
-  }
-
   return JSON.stringify(newStyleObject);
 }
 
@@ -54,7 +51,7 @@ function sortedStyleObjectAndToJsonStr(styleObject, type: string) {
 function unifyClassName(data: ILayoutNode, style_class_map = {}) {
   if (!data || typeof data != 'object') return data;
 
-  const sortedStyleStr = sortedStyleObjectAndToJsonStr(data.style, data.componentType);
+  const sortedStyleStr = sortedStyleObjectAndToJsonStr(data.style);
 
   if (Object.keys(style_class_map).indexOf(sortedStyleStr) == -1) {
     style_class_map[sortedStyleStr] = {};
