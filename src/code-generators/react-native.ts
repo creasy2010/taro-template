@@ -28,7 +28,7 @@ export default (data: ILayoutNode, config: IParseConfig): ICompData => {
       });
     }
     let attrStr = '';
-    attrStr += node.attrs.src ? ` source='{${node.attrs.src}}'` : '';
+    attrStr += node.attrs.src ? ` source={${node.attrs.src}}` : '';
     attrStr += node.attrs.className ? ` style={styles.${node.attrs.className}}` : '';
 
     if (node.innerText) {
