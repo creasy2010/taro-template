@@ -78,3 +78,16 @@ export interface IStyle {
   lines?: number;
 }
 
+export interface IOriginNode {
+  props: {
+    style: IStyle
+    attrs: { x: number, y: number }
+  }
+  extra: {
+    // 结点的同行结点
+    sameRows: IOriginNode[],
+    // 结点的同列结点
+    sameCols: IOriginNode[],
+  },
+  children: IOriginNode[]
+}
