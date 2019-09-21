@@ -66,7 +66,7 @@ export interface IStyle {
   marginBottom?: number;
   marginRight?: number;
   marginLeft?: number;
-  width?: number | string;
+  width?: number;
   height?: number;
   lineHeight?: number;
   fontSize?: number;
@@ -79,6 +79,7 @@ export interface IStyle {
 }
 
 export interface IOriginNode {
+  id: string;
   props: {
     style: IStyle
     attrs: { x: number, y: number }
