@@ -42,7 +42,8 @@ export function exit(node: ILayoutNode) {
     let paddingLR = padding - marginLR;
     newBlock.style.paddingLeft = newBlock.style.paddingRight = paddingLR;
     newBlock.children.forEach(child => {
-      child.style.width = `calc(${Math.floor(oldRow1.attrs.__ARGS__.width - number * spacing - 2 * paddingLR) * 2}px / ${number})`;
+      // fixme 临时删了
+      // child.style.width = `calc(${Math.floor(oldRow1.attrs.__ARGS__.width - number * spacing - 2 * paddingLR) * 2}px / ${number})`;
       child.style.marginRight = child.style.marginLeft = marginLR;
       if (oldRow1.style.marginBottom) {
         child.style.marginBottom = oldRow1.style.marginBottom;

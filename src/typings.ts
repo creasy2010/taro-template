@@ -76,19 +76,29 @@ export interface IStyle {
   backgroundColor?: string;
   backgroundImage?: string;
   lines?: number;
+  [s: string]: any;
+}
+
+export interface Coords {
+  x: number,
+  y: number
 }
 
 export interface IOriginNode {
   id: string;
   props: {
     style: IStyle
-    attrs: { x: number, y: number }
+    attrs: { x: number, y: number, [s: string]: any; }
   }
-  extra: {
+  extra?: {
     // 结点的同行结点
     sameRows: IOriginNode[],
     // 结点的同列结点
     sameCols: IOriginNode[],
   },
-  children: IOriginNode[]
+  children?: IOriginNode[],
+  parent?: IOriginNode,
+  type?: string;
+  points?: Coords[];
+  [s: string]: any;
 }
