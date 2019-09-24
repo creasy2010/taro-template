@@ -31,7 +31,7 @@ export default (data: ILayoutNode, config: IParseConfig): ICompData => {
     // ${node.attrs.src}
     let attrStr = '';
     attrStr += node.attrs.src ? ` src={require('./img/${node.attrs.src}.png')}` : '';
-    attrStr += node.attrs.className ? ` className="c${node.attrs.className}"` : '';
+    attrStr += node.attrs.className ? ` className="${config.classPrefix}${node.attrs.className}"` : '';
 
     if (node.innerText) {
       lines.push(line(`<${nodeType}${attrStr}>${node.innerText}</${nodeType}>`, level));
@@ -69,13 +69,13 @@ export default (data: ILayoutNode, config: IParseConfig): ICompData => {
   }
 
   styleArr.forEach(item => delete item.style.lines);
-  lines.push(line(`.c${styleArr[0].className} {`, 0));
+  lines.push(line(`.${config.classPrefix}${styleArr[0].className} {`, 0));
   Object.keys(styleArr[0].style).forEach(key => {
     lines.push(line(`${transKey(key)}: ${transVal(key, styleArr[0].style[key])};`, 1));
   });
   styleArr.forEach((item, idx) => {
     if (idx > 0) {
-      lines.push(line(`.c${item.className} {`, 1));
+      lines.push(line(`.${config.classPrefix}${item.className} {`, 1));
       Object.keys(item.style).forEach(key => {
         lines.push(line(`${transKey(key)}: ${transVal(key, item.style[key])};`, 2));
       });

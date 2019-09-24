@@ -10,6 +10,7 @@ let config: IParseConfig = {
   moduleId: process.argv[2],
   pagePath: process.argv[3],
   pwd: process.cwd(),
+  classPrefix: process.argv[4] ? process.argv[4] : 'c'
 };
 
 config.pageName = config.pagePath.split('/').pop();

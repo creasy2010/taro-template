@@ -6,6 +6,8 @@ export interface IParseConfig {
   fsExtra: any;
   urllib: any;
   imgDir?: string;
+  // 样式前缀
+  classPrefix?: string;
 }
 
 export interface ILayoutNode {
