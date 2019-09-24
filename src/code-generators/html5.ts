@@ -31,7 +31,7 @@ export default (data: ILayoutNode, config: IParseConfig): ICompData => {
     // ${node.attrs.src}
     let attrStr = '';
     attrStr += node.attrs.src ? ` src={require('./img/${node.attrs.src}.png')}` : '';
-    attrStr += node.attrs.className ? ` class="c${node.attrs.className}"` : '';
+    attrStr += node.attrs.className ? ` className="c${node.attrs.className}"` : '';
 
     if (node.innerText) {
       lines.push(line(`<${nodeType}${attrStr}>${node.innerText}</${nodeType}>`, level));
