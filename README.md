@@ -1,11 +1,8 @@
-# taro-template
-taro - img cook   模板  
-
-```bash
-├── README.md
-├── package.json 
-├── src
-   ├── dsl.js      // 定义返回模板的类型
-   ├── index.js      // 代码生成入口
-   └── get-data.js      // 获取layout数据
+# 用法
+```
+yarn build
+yarn code 10390 user-center c
+10390: 模块id
+user-center: 模块名称
+c: 样式前缀(非必传)
 ```
