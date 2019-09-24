@@ -8,7 +8,7 @@ const dealImg = (config: IParseConfig, data: ILayoutNode) => {
   if (!config.imgDir) {
     config.imgDir = "./src/assets/image/";
   }
-  config.imgDir = join(config.pwd, config.imgDir) + config.pagePath;
+  config.imgDir = './data/' + config.pagePath + '/img';
   config.fsExtra.ensureDirSync(config.imgDir);
 
   // 递归处理图片方法
