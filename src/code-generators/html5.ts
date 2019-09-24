@@ -28,8 +28,9 @@ export default (data: ILayoutNode, config: IParseConfig): ICompData => {
         className: node.attrs.className
       });
     }
+    // ${node.attrs.src}
     let attrStr = '';
-    attrStr += node.attrs.src ? ` src='${node.attrs.src}'` : '';
+    attrStr += node.attrs.src ? ` src={require('./img/${node.attrs.src}.png')}` : '';
     attrStr += node.attrs.className ? ` class="c${node.attrs.className}"` : '';
 
     if (node.innerText) {
