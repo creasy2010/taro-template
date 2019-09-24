@@ -1,4 +1,4 @@
-import { IOriginNode } from "../typings";
+import { IOriginNode, ILayoutNode, ILayoutNodeAttr, IStyle } from "../typings";
 import { calcNodeCoords, createOriginNode, calcBoundaryBox, calcHSpacing, calcInnerSpacings } from "./utils";
 
 
@@ -73,14 +73,24 @@ const mergeNodes = (nodes: IOriginNode[]): IOriginNode[] => {
     return nodes;
   }
 
+  // 是否是连续的子结点列表
+  const isSubNodes =  (nodes: IOriginNode[], subNodes: IOriginNode[]) => {
+    const idx = nodes.indexOf(subNodes[0]);
+    for (let i = 0; i < subNodes.length; i++) {
+      if (nodes[idx + i] != subNodes[i]) return false;
+    }
+    return true;
+  }
+
   const mergeNodesOnce = (nodes) => {
-    // 同行结点合并(同行且有相同同列结点)
+    // 同行结点合并(同行，且有相同同列结点，且是连续的)
     for (let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
       let sameRows = [node, ...node.extra.sameRows];
       node.extra.sameRows.forEach(row => {
         sameRows.push(...row.extra.sameRows.filter(item => !sameRows.includes(item)));
       });
+      sameRows.sort((a, b) => a.points[4].x - b.points[4].x);
       let samerowsMap = {} as any;
       sameRows.forEach(item => {
         const key = item.extra.sameCols.map(n => n.id).sort().toString();
@@ -92,20 +102,22 @@ const mergeNodes = (nodes: IOriginNode[]): IOriginNode[] => {
       });
       const keys = Object.keys(samerowsMap);
       for (let i = 0; i < keys.length; i++) {
-        if (samerowsMap[keys[i]].length > 1) {
+        //
+        if (samerowsMap[keys[i]].length > 1 && isSubNodes(sameRows, samerowsMap[keys[i]])) {
           nodes = merge('row', nodes, samerowsMap[keys[i]]);
           return { nodes, isEnd: false };
         }
       }
     }
 
-    // 同列结点合并(同列且有相同同行结点)
+    // 同列结点合并(同列，且有相同同行结点，且是连续的)
     for (let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
       let sameCols = [node, ...node.extra.sameCols];
       node.extra.sameCols.forEach(col => {
         sameCols.push(...col.extra.sameCols.filter(item => !sameCols.includes(item)));
       });
+      sameCols.sort((a, b) => a.points[4].y - b.points[4].y);
       let samecolsMap = {} as any;
       sameCols.forEach(item => {
         const key = item.extra.sameRows.map(n => n.id).sort().toString();
@@ -117,7 +129,8 @@ const mergeNodes = (nodes: IOriginNode[]): IOriginNode[] => {
       });
       const keys = Object.keys(samecolsMap);
       for (let i = 0; i < keys.length; i++) {
-        if (samecolsMap[keys[i]].length > 1) {
+        //
+        if (samecolsMap[keys[i]].length > 1 && isSubNodes(sameCols, samecolsMap[keys[i]])) {
           nodes = merge('column', nodes, samecolsMap[keys[i]]);
           return { nodes, isEnd: false };
         }
@@ -140,16 +153,25 @@ const mergeNodes = (nodes: IOriginNode[]): IOriginNode[] => {
 /**
  * 行优先连接
  */
-const rowFirstConnect = (nodes: IOriginNode[]) => {}
+const rowFirstConnect = (nodes: IOriginNode[]) => {
+  let flag = false;
+  const walkNode = (node: IOriginNode) => {
+    node.children.forEach(child => walkNode(child));
+    const { sameRows, sameCols } = node.extra;
+    if (sameRows.length > 0 && sameCols.length > 0 && !flag) {
+      node.prior = 'row';
+      flag = true;
+    }
+  }
+  nodes.forEach(child => walkNode(child));
+}
 
 /**
  * 嵌套的行列，合并为一行一列
  */
 const mergeSameColRow = (node: IOriginNode) => {
   const walkNode = (node: IOriginNode) => {
-    if (node.children) {
-      node.children.forEach(child => walkNode(child));
-    }
+    node.children.forEach(child => walkNode(child));
     const style = node.props.style;
     const parentStyle = node.parent.props.style;
     if (style.flexDirection && style.flexDirection === parentStyle.flexDirection) {
@@ -482,35 +504,61 @@ const originNodes: IOriginNode[] = [{
   "id": "Text_4_0"
 }];
 
-// init
-originNodes.forEach(node => {
-  node.extra = { sameRows: [], sameCols: []};
-  node.points = calcNodeCoords(node);
-  node.children = [];
-});
+
+let classNameIdx = 0;
+
+const toLayoutNode = (node: IOriginNode): ILayoutNode => {
+  const layoutNode: ILayoutNode = {
+    children: [],
+    type: node.type,
+    parent: null,
+    attrs: {
+      className: 'className' + classNameIdx++
+    },
+    style: node.props.style,
+
+  };
+  if (node.props.attrs.source) {
+    layoutNode.attrs.src = node.props.attrs.source;
+    layoutNode.attrs.source = node.props.attrs.source;
+  }
+  if (node.props.attrs.text) {
+    layoutNode.innerText = node.props.attrs.text;
+  }
+  layoutNode.children = node.children.map(child => {
+    let layoutChild = toLayoutNode(child);
+    layoutChild.parent = layoutNode;
+    return layoutChild;
+  });
+  return layoutNode;
+}
+
+export default (): ILayoutNode => {
+  // init
+  originNodes.forEach(node => {
+    node.extra = { sameRows: [], sameCols: []};
+    node.points = calcNodeCoords(node);
+    node.children = [];
+  });
 
 // 划分行与列
-const node = calcRowCol(originNodes);
+  const node = calcRowCol(originNodes);
 // 计算row、column布局
-calcRowLayout(node);
-calcColLayout(node);
-const rmAttr = (node: IOriginNode) => {
-  delete node.extra;
-  delete node.parent;
-  delete node.points;
-  if (node.children) {
-    node.children.forEach(child => {
-      rmAttr(child);
-    });
-  } else {
+  calcRowLayout(node);
+  calcColLayout(node);
+  const rmAttr = (node: IOriginNode) => {
+    delete node.extra;
+    delete node.parent;
+    delete node.points;
+    if (node.children) {
+      node.children.forEach(child => {
+        rmAttr(child);
+      });
+    } else {
+    }
   }
+  rmAttr(node);
+  return toLayoutNode(node);
 }
-rmAttr(node);
 
-console.log(JSON.stringify(node));
-// 2.行布局、列布局
-// calcRowLayout(node);
-// calcColLayout(node);
-// // 3.间距处理
-// calcSpacing(node);
 

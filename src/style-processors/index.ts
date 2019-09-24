@@ -14,20 +14,20 @@ import * as CommonRenameClassname from './common-rename-classname';
 import * as CommonUnifyClassname from './common-unify-classname';
 
 const processors = [
-  HighColumnVerAdjust,
-  HighColumnHorAdjust,
-  HighRowLayoutAdjust,
-  HighSpacingAdjust,
-  HighButtonAdjust,
-  HighMultiColumnList,
-  HighMultilineItemsAdjust,
-  LowPaddingToMargin,
-  HighAbstractNode,
-  HighRmExtraWh,
-  LowRmExtraAttrs,
+  // HighColumnVerAdjust,
+  // HighColumnHorAdjust,
+  // HighRowLayoutAdjust,
+  // HighSpacingAdjust,
+  // HighButtonAdjust,
+  // HighMultiColumnList,
+  // HighMultilineItemsAdjust,
+  // LowPaddingToMargin,
+  // HighAbstractNode,
+  // HighRmExtraWh,
+  // LowRmExtraAttrs,
   // LowSingleLineheight,
-  CommonUnifyClassname,
-  CommonRenameClassname
+  // CommonUnifyClassname,
+  // CommonRenameClassname
 ];
 
 export const processStyle = (node) => {

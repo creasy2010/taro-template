@@ -2,7 +2,7 @@ import { ICompData, ILayoutNode, IParseConfig, IParseResult } from "../typings";
 // import codeGenerator from "../code-generator";
 import h5Generrator from './html5';
 import taroGenerrator from './taro';
-import rnGenerrator from './react-native';
+// import rnGenerrator from './react-native';
 
 /**
  * 切分布局
@@ -34,11 +34,11 @@ export const generateCode =  async (config: IParseConfig, data: ILayoutNode): Pr
   const nodes: ILayoutNode[] = divideLayout(data, config);
   let subComps: ICompData[] = [];
   nodes.forEach(node => {
-    const subComp = rnGenerrator(node, config);
+    const subComp = h5Generrator(node, config);
     subComp.componentName = node.componentName;
     subComps.push(subComp);
   });
-  let mainComp: ICompData = rnGenerrator(data, config);
+  let mainComp: ICompData = h5Generrator(data, config);
 
   return {
     subComps,

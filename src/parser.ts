@@ -2,7 +2,7 @@ import { join } from "path";
 import { ILayoutNode, IParseConfig, IParseResult } from "./typings";
 import { processStyle } from './style-processors';
 import { generateCode } from './code-generators';
-
+import layout from './layout';
 
 const dealImg = (config: IParseConfig, data: ILayoutNode) => {
   if (!config.imgDir) {
@@ -93,7 +93,7 @@ const getLayoutJson = async (config: IParseConfig): Promise<ILayoutNode> => {
 export default async (config: IParseConfig): Promise<IParseResult> => {
 
   // 1.获取依赖数、预处理
-  let data = await getLayoutJson(config);
+  let data = layout();
 
   // 2.样式优化
   processStyle(data);

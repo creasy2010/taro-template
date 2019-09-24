@@ -98,7 +98,9 @@ export interface IOriginNode {
   },
   children?: IOriginNode[],
   parent?: IOriginNode,
-  type?: string;
+  type?: 'Text' | 'Image' | 'Block';
   points?: Coords[];
+  // 布局优先row还是column
+  prior?: string;
   [s: string]: any;
 }
