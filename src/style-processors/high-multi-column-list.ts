@@ -23,7 +23,7 @@ export function exit(node: ILayoutNode) {
     // fixme 样式命名
     newBlock.attrs.className = 'twoCols';
     newBlock.style = {
-      display: 'flex',
+      // display: 'flex',
       flexDirection: 'row',
       justifyContent: 'flex-start',
       flexWrap: 'wrap'
