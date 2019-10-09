@@ -1,6 +1,8 @@
 import { ILayoutNode } from "../typings";
 import { appendVal, contentBoxHeight, marginBoxHeight, borderBoxWidth, contentBoxWidth } from "./utils";
 
+import debug from  'debug';
+const log  = debug('style:hign-ver-adjust');
 /**
  * column方向布局，不使用space-between、space-around
  **/
@@ -22,7 +24,7 @@ export function enter(node: ILayoutNode) {
     node.children.forEach((child, idx) => {
       if (idx > 0) appendVal(child.style, 'marginTop', marginTop);
     });
-    console.log(`结点${node.attrs.className}由布局column.space-between转为column.flex-start`);
+    log(`结点${node.attrs.className}由布局column.space-between转为column.flex-start`);
   }
 
   if (justifyContent === 'space-around') {
@@ -36,7 +38,7 @@ export function enter(node: ILayoutNode) {
     });
     appendVal(node.style, 'paddingTop', Math.round(spacing / 2));
     appendVal(node.style, 'paddingBottom', Math.round(spacing / 2));
-    console.log(`结点${node.attrs.className}由布局column.space-around转为column.flex-start`);
+    log(`结点${node.attrs.className}由布局column.space-around转为column.flex-start`);
   }
 }
 

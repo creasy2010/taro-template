@@ -1,4 +1,6 @@
 import { ILayoutNode } from "../typings";
+import debug from  'debug';
+const log  = debug('style:rename');
 
 /**
  * 样式重命名处理器
@@ -14,7 +16,7 @@ export function enter(node: ILayoutNode) {
 
 // fixme 换位置后，重命名样式在切分布局之上，要调整逻辑；后面考虑换地方
 export function exit(data: ILayoutNode) {
-  console.log('样式重命名处理器');
+  log('样式重命名处理器');
 
   let map = {};
   const deal = (node) => {

@@ -1,4 +1,6 @@
 import { ILayoutNode } from "../typings";
+import debug from  'debug';
+const log  = debug('style:unify-className');
 
 /**
  * 样式去重处理器

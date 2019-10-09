@@ -1,4 +1,6 @@
 import { ILayoutNode } from "../typings";
+import debug from  'debug';
+const log  = debug('style:hign-hor-adjust');
 
 /**
  * column方向布局，flex-start改为stretch
@@ -14,7 +16,7 @@ export function test(node: ILayoutNode): boolean {
 
 export function enter(node: ILayoutNode) {
   node.style.alignItems = 'stretch';
-  console.log(`结点${node.attrs.className}由布局column.alignItems.flex-start转为stretch`);
+  log(`结点${node.attrs.className}由布局column.alignItems.flex-start转为stretch`);
 }
 
 export function exit(node: ILayoutNode) {

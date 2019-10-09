@@ -1,6 +1,8 @@
 import { ILayoutNode } from "../typings";
 import { newNode, val } from './utils';
 
+import debug from  'debug';
+const log  = debug('style:high-multi-column-list');
 /**
  * 两列、三列列表调整
  **/
@@ -48,7 +50,7 @@ export function exit(node: ILayoutNode) {
         child.style.marginBottom = oldRow1.style.marginBottom;
       }
     });
-    console.log(`${node.attrs.className} ${number}列布局调整 index:${start}`);
+    log(`${node.attrs.className} ${number}列布局调整 index:${start}`);
   }
   if (twoResults.length > 0) twoResults.forEach(item => adjust(item, 2));
   if (threeResults.length > 0) threeResults.forEach(item => adjust(item, 3));

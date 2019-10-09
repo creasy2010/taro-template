@@ -1,6 +1,9 @@
 import { ILayoutNode } from "../typings";
 import { appendVal, sameVal, val, calcNodeCoords } from "./utils";
 
+
+import debug from  'debug';
+const log  = debug('style:high-spacing-adjust');
 /**
  * 垂直方向间距使用marginBottom、水平方向间距使用marginRight
  **/

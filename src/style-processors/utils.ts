@@ -1,5 +1,8 @@
 import { ILayoutNode, ILayoutNodeAttr, IStyle } from "../typings";
 
+
+import debug from  'debug';
+const log  = debug('style:util');
 export function delKeys(keys: string[], obj) {
   keys.forEach(key => delete obj[key]);
 }

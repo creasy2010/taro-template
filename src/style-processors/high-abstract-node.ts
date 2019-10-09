@@ -1,5 +1,7 @@
 import { ILayoutNode, IPosition } from "../typings";
 import { contentBoxWidth, contentBoxHeight, calcAbsPosition, marginBoxWidth, marginBoxHeight, delMargin } from "./utils";
+import debug from  'debug';
+const log  = debug('style:hign-abstrace-node');
 
 /**
  * 绝对定位结点识别
@@ -41,7 +43,7 @@ export function enter(node: ILayoutNode) {
   node.parent.style.position = 'relative';
   delMargin(node.style);
 
-  console.log(`结点${node.attrs.className}调整为绝对定位`);
+  log(`结点${node.attrs.className}调整为绝对定位`);
 
 }
 

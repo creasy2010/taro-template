@@ -1,6 +1,8 @@
 import { ILayoutNode } from "../typings";
 import { appendVal, contentBoxWidth, marginBoxWidth, val, newNode } from "./utils";
 
+import debug from  'debug';
+const log  = debug('style:high-row-layout-adjust');
 /**
  * row方向布局，尽量不使用center
  **/
@@ -27,13 +29,13 @@ export function enter(node: ILayoutNode) {
     const paddingLR = Math.round((contentBoxWidth(node) - childrenWidth) / 2);
     appendVal(node.style, 'paddingLeft', paddingLR);
     appendVal(node.style, 'paddingRight', paddingLR);
-    console.log(`结点${node.attrs.className}由布局row.center转为row.flex-start`);
+    log(`结点${node.attrs.className}由布局row.center转为row.flex-start`);
 
     // 2.再尝试转为space-between
     // 元素间间距小于1/20宽度，左右块间距大于1/6间距
     const fivePerc = Math.round(node.attrs.__ARGS__.width / 20);
     const twentyPerc = Math.round(node.attrs.__ARGS__.width / 6);
-    console.log(`fivePerc:${fivePerc}, twentyPerc:${twentyPerc}`);
+    log(`fivePerc:${fivePerc}, twentyPerc:${twentyPerc}`);
 
     // 分割点索引
     let splitIdx = null;
@@ -70,7 +72,7 @@ export function enter(node: ILayoutNode) {
     }
     node.children = [headBlock, tailBlock];
     node.style.justifyContent = 'space-between';
-    console.log(`结点${node.attrs.className}由布局row.flex-star转为row.space-between`);
+    log(`结点${node.attrs.className}由布局row.flex-star转为row.space-between`);
   }
 
 }

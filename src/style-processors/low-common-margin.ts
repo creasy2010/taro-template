@@ -1,6 +1,8 @@
 import { ILayoutNode } from "../typings";
 import { sameVal } from "./utils";
 
+import debug from  'debug';
+const log  = debug('style:low-common-margin');
 /**
  * 尽量使用外层边距
  **/

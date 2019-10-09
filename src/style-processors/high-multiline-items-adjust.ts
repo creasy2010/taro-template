@@ -1,6 +1,8 @@
 import { ILayoutNode } from "../typings";
 import { calcHMargin, calcHPadding, delMargin } from './utils';
 
+import debug from  'debug';
+const log  = debug('style:high-multiline-items-adjust');
 /**
  * 多行重复元素布局调整（先只考虑两行）
  **/
@@ -54,7 +56,7 @@ export function enter(node: ILayoutNode) {
     delMargin(item.style);
     item.style.marginRight = marginLeft;
   });
-  console.log(`${node.attrs.className} 多行重复元素布局调整 `);
+  log(`${node.attrs.className} 多行重复元素布局调整 `);
 }
 
 export function exit(node: ILayoutNode) {

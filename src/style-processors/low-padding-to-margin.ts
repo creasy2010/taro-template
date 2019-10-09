@@ -1,6 +1,8 @@
 import { ILayoutNode } from "../typings";
 import { val, appendVal } from "./utils";
 
+import debug from  'debug';
+const log  = debug('style:low-padding-to-margin');
 /**
  * 把结点的padding尽量转成margin
  **/
@@ -30,7 +32,7 @@ export function enter(node: ILayoutNode) {
     width: position.width - paddingLeft - paddingRight,
     height: position.height - paddingTop - paddingBottom
   }
-  console.log(`结点${node.attrs.className}的padding转化成了margin`);
+  log(`结点${node.attrs.className}的padding转化成了margin`);
 }
 
 export function exit(node: ILayoutNode) {

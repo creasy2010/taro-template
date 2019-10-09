@@ -1,5 +1,7 @@
 import { ILayoutNode } from "../typings";
 import { calcAbsPosition, delMarginPadding, delPadding, marginBoxWidth } from "./utils";
+import debug from  'debug';
+const log  = debug('style:hign-button-adjust');
 
 /**
  * button类型结点样式调整
@@ -37,7 +39,7 @@ export function enter(node: ILayoutNode) {
       || (children.length == 2 && textNode.length == 1 && absNode.length == 1)
       || (children.length == 3 && textNode.length == 1 && iconNode.length == 1 && absNode.length == 1))) return;
 
-    console.log(`按钮结点${node.attrs.className}样式调整，按钮内容"${textNode[0].innerText}"`);
+    log(`按钮结点${node.attrs.className}样式调整，按钮内容"${textNode[0].innerText}"`);
 
     // 2.处理内容结点
     delPadding(textNode[0].style);

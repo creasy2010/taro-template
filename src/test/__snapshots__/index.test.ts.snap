@@ -1,0 +1,833 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`正常解析: 正常解析 1`] = `
+Object {
+  "index.html": "<View style={styles.box}>
+  <View style={styles.hd}>
+    <Text style={styles.txt} allowFontScaling={false}>09:41</Text>
+    <View style={styles.block}>
+      <Image source={require('./img/pageTitle0.png')} style={styles.shebeiliuliang}/>
+      <Image source={require('./img/pageTitle1.png')} style={styles.huiyuan}/>
+      <View style={styles.group}>
+        <View style={styles.colorDiv}>
+        </View>
+      </View>
+      <Image source={require('./img/pageTitle2.png')} style={styles.dot}/>
+    </View>
+  </View>
+  <View style={styles.bd}>
+    <Image source={require('./img/pageTitle3.png')} style={styles.left}/>
+    <Text style={styles.confirmOrder} allowFontScaling={false}>确认订单</Text>
+    <View style={styles.block1}>
+      <Image source={require('./img/pageTitle4.png')} style={styles.notice}/>
+      <View style={styles.color}>
+      </View>
+      <Image source={require('./img/pageTitle5.png')} style={styles.renwuzhuangtaiDangqian}/>
+    </View>
+  </View>
+  <View style={styles.submain}>
+    <View style={styles.block2}>
+      <View style={styles.block3}>
+        <Text style={styles.timoma} allowFontScaling={false}>提莫妈</Text>
+        <Text style={styles.text} allowFontScaling={false}>138****8138</Text>
+      </View>
+      <View style={styles.group1}>
+        <Image source={require('./img/pageTitle6.png')} style={styles.div}/>
+        <View style={styles.div}>
+        </View>
+      </View>
+    </View>
+    <Text style={styles.desc} allowFontScaling={false}>汪汪省龟龟市喵喵区鼠鼠路618号宠物大厦9-18</Text>
+    <View style={styles.block4}>
+      <View style={styles.colorDiv1}>
+      </View>
+      <View style={styles.color1}>
+      </View>
+      <View style={styles.colorDiv2}>
+      </View>
+      <View style={styles.color2}>
+      </View>
+      <View style={styles.colorDiv3}>
+      </View>
+      <View style={styles.color3}>
+      </View>
+      <View style={styles.colorDiv4}>
+      </View>
+      <View style={styles.color4}>
+      </View>
+      <View style={styles.colorDiv5}>
+      </View>
+      <View style={styles.color5}>
+      </View>
+      <View style={styles.colorDiv6}>
+      </View>
+      <View style={styles.color6}>
+      </View>
+      <View style={styles.colorDiv7}>
+      </View>
+      <View style={styles.color7}>
+      </View>
+      <View style={styles.colorDiv8}>
+      </View>
+      <View style={styles.color8}>
+      </View>
+    </View>
+  </View>
+  <View style={styles.row}>
+    <Text style={styles.text} allowFontScaling={false}>配送方式</Text>
+    <View style={styles.group2}>
+      <Text style={styles.coupon} allowFontScaling={false}>快递配送</Text>
+      <View style={styles.sWrap}>
+        <Image source={require('./img/pageTitle7.png')} style={styles.s}/>
+      </View>
+    </View>
+  </View>
+  <View style={styles.row1}>
+    <View style={styles.block5}>
+      <Image source={require('./img/pageTitle8.png')} style={styles.img}/>
+      <View style={styles.group3}>
+        <View style={styles.group4}>
+          <Text style={styles.summary} allowFontScaling={false}>大型犬只野兽派洗剪吹，凶悍大叔专业洗狗12年，洗遍天下无…</Text>
+          <View style={styles.moneyWrap}>
+            <Text style={styles.money} allowFontScaling={false}>¥198.9</Text>
+            <View style={styles.wrap}>
+              <Text style={styles.txt1} allowFontScaling={false}>×1</Text>
+            </View>
+          </View>
+        </View>
+        <Text style={styles.chicken} allowFontScaling={false}>鸡肉 400g</Text>
+      </View>
+    </View>
+    <View style={styles.block5}>
+      <Image source={require('./img/pageTitle9.png')} style={styles.img}/>
+      <View style={styles.group5}>
+        <View style={styles.priceWrap}>
+          <Text style={styles.desc1} allowFontScaling={false}>大型犬野兽派洗剪吹A套餐</Text>
+          <Text style={styles.price} allowFontScaling={false}>¥34</Text>
+        </View>
+        <Text style={styles.word} allowFontScaling={false}>×1</Text>
+        <Text style={styles.chicken} allowFontScaling={false}>鸡肉 400g</Text>
+      </View>
+    </View>
+    <View style={styles.block5}>
+      <View style={styles.empty}>
+      </View>
+      <View style={styles.group5}>
+        <View style={styles.group6}>
+          <Text style={styles.summary1} allowFontScaling={false}>大型犬只野兽派洗剪吹，凶悍大叔专业洗狗12年，洗遍天下狗</Text>
+          <View style={styles.moneyWrap}>
+            <Text style={styles.money} allowFontScaling={false}>¥160.23</Text>
+            <View style={styles.block6}>
+              <Text style={styles.txt1} allowFontScaling={false}>×1</Text>
+            </View>
+          </View>
+        </View>
+        <Text style={styles.chicken} allowFontScaling={false}>鸡肉 400g</Text>
+      </View>
+    </View>
+  </View>
+  <View style={styles.main}>
+    <Text style={styles.messageCanNotBeFilled} allowFontScaling={false}>留言 可不填</Text>
+    <Text style={styles.desc2} allowFontScaling={false}>您可输入您的其他要求，最多50字</Text>
+  </View>
+  <View style={styles.row2}>
+    <View style={styles.block7}>
+      <Text style={styles.price1} allowFontScaling={false}>应付金额</Text>
+      <Text style={styles.money1} allowFontScaling={false}>¥80.23</Text>
+      <Text style={styles.price1} allowFontScaling={false}>商品金额</Text>
+      <Text style={styles.price1} allowFontScaling={false}>¥23.24</Text>
+    </View>
+    <View style={styles.block8}>
+      <Text style={styles.price2} allowFontScaling={false}>活动优惠</Text>
+      <Text style={styles.price2} allowFontScaling={false}>-¥8.90</Text>
+    </View>
+    <View style={styles.block8}>
+      <View style={styles.group7}>
+        <Text style={styles.coupon} allowFontScaling={false}>优惠券</Text>
+        <View style={styles.infoWrap}>
+          <Text style={styles.info} allowFontScaling={false}>已选推荐优惠券</Text>
+        </View>
+      </View>
+      <View style={styles.group8}>
+        <Text style={styles.coupon} allowFontScaling={false}>-¥12.00</Text>
+        <View style={styles.block9}>
+          <Image source={require('./img/pageTitle10.png')} style={styles.div}/>
+          <View style={styles.div}>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View style={styles.block10}>
+      <Text style={styles.price2} allowFontScaling={false}>配送费用</Text>
+      <Text style={styles.price2} allowFontScaling={false}>¥1.00</Text>
+    </View>
+  </View>
+  <View style={styles.row}>
+    <Text style={styles.text} allowFontScaling={false}>充值卡支付</Text>
+    <View style={styles.priceWrap1}>
+      <Text style={styles.price3} allowFontScaling={false}>￥100.00</Text>
+      <View style={styles.block11}>
+        <Image source={require('./img/pageTitle11.png')} style={styles.div}/>
+        <View style={styles.div}>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View style={styles.ft}>
+    <Text style={styles.price4} allowFontScaling={false}>还需支付 ¥1.00</Text>
+    <View style={styles.block12}>
+      <View style={styles.group9}>
+        <View style={styles.weixinWrap}>
+          <Image source={require('./img/pageTitle12.png')} style={styles.weixin}/>
+        </View>
+        <Text style={styles.text} allowFontScaling={false}>微信支付</Text>
+      </View>
+      <View style={styles.icongoumaichenggongWrap}>
+        <Image source={require('./img/pageTitle13.png')} style={styles.div1}/>
+        <View style={styles.div1}>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View style={styles.color9}>
+  </View>
+  <View style={styles.view}>
+    <Text style={styles.text} allowFontScaling={false}>合计：¥198.23</Text>
+    <View style={styles.tagWrap}>
+      <Text style={styles.tag} allowFontScaling={false}>去支付</Text>
+    </View>
+  </View>
+  <View style={styles.block13}>
+    <View style={styles.colorDiv9}>
+    </View>
+  </View>
+</View>",
+  "index.js": "const styles = StyleSheet.create({
+  box: {
+    position: 'relative',
+    backgroundColor: '#f5f5f5',
+    height: 1080,
+  },
+  hd: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#ffffff',
+    paddingRight: 14,
+    paddingLeft: 17,
+    height: 40,
+  },
+  txt: {
+    color: '#000000',
+    fontFamily: 'Helvetica',
+    fontSize: 15,
+  },
+  block: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: 15,
+  },
+  shebeiliuliang: {
+    width: 17,
+    height: 11,
+    marginRight: 5,
+  },
+  huiyuan: {
+    width: 15,
+    height: 11,
+    marginRight: 5,
+  },
+  group: {
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderRadius: 2.666666746139526,
+    borderColor: 'rgba(0,0,0,0.35)',
+    paddingRight: 3,
+    paddingLeft: 2,
+    height: 11,
+    marginRight: 1,
+  },
+  colorDiv: {
+    marginTop: 1,
+    borderRadius: 1.333333373069763,
+    backgroundColor: '#000000',
+    width: 18,
+    height: 7,
+  },
+  dot: {
+    width: 1,
+    height: 4,
+  },
+  bd: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    backgroundColor: '#ffffff',
+    height: 44,
+    marginBottom: 4,
+    paddingLeft: 8,
+  },
+  left: {
+    width: 10,
+    height: 18,
+    marginRight: 132,
+  },
+  confirmOrder: {
+    color: '#333333',
+    fontSize: 18,
+    marginRight: 53,
+  },
+  block1: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderRadius: 16,
+    borderColor: 'rgba(235,235,235,1.00)',
+    backgroundColor: '#ffffff',
+    width: 88,
+    height: 32,
+    paddingLeft: 12,
+    paddingRight: 12,
+  },
+  notice: {
+    width: 19,
+    height: 7,
+    marginRight: 12,
+  },
+  color: {
+    backgroundColor: '#cccccc',
+    width: 1,
+    height: 19,
+    marginRight: 12,
+  },
+  renwuzhuangtaiDangqian: {
+    width: 18,
+    height: 18,
+    marginRight: 12,
+  },
+  submain: {
+    backgroundColor: '#ffffff',
+    marginBottom: 12,
+    paddingTop: 16,
+  },
+  block2: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 2,
+    marginLeft: 12,
+    marginRight: 11,
+  },
+  block3: {
+    flexDirection: 'row',
+  },
+  timoma: {
+    color: '#333333',
+    fontSize: 16,
+    marginRight: 8,
+  },
+  text: {
+    color: '#333333',
+    fontSize: 16,
+  },
+  group1: {
+    position: 'relative',
+    marginTop: 14,
+    width: 4,
+    height: 10,
+  },
+  div: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: 4,
+    height: 10,
+  },
+  desc: {
+    marginLeft: 12,
+    color: '#b3b3b3',
+    fontSize: 12,
+    marginBottom: 16,
+  },
+  block4: {
+    position: 'relative',
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  colorDiv1: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    backgroundColor: '#fe7967',
+    width: 16,
+    height: 2,
+    marginRight: 176,
+  },
+  color1: {
+    position: 'absolute',
+    top: 0,
+    right: 167,
+    backgroundColor: '#fe7967',
+    width: 16,
+    height: 2,
+    marginRight: 176,
+  },
+  colorDiv2: {
+    position: 'absolute',
+    top: 0,
+    left: 96,
+    backgroundColor: '#fe7967',
+    width: 16,
+    height: 2,
+    marginRight: 176,
+  },
+  color2: {
+    position: 'absolute',
+    top: 0,
+    right: 71,
+    backgroundColor: '#fe7967',
+    width: 16,
+    height: 2,
+    marginRight: 176,
+  },
+  colorDiv3: {
+    position: 'absolute',
+    top: 0,
+    left: 48,
+    backgroundColor: '#fe7967',
+    width: 16,
+    height: 2,
+    marginRight: 176,
+  },
+  color3: {
+    position: 'absolute',
+    top: 0,
+    right: 119,
+    backgroundColor: '#fe7967',
+    width: 16,
+    height: 2,
+    marginRight: 176,
+  },
+  colorDiv4: {
+    position: 'absolute',
+    top: 0,
+    left: 144,
+    backgroundColor: '#fe7967',
+    width: 16,
+    height: 2,
+    marginRight: 176,
+  },
+  color4: {
+    position: 'absolute',
+    top: 0,
+    right: 23,
+    backgroundColor: '#fe7967',
+    width: 16,
+    height: 2,
+    marginRight: 176,
+  },
+  colorDiv5: {
+    position: 'absolute',
+    top: 0,
+    left: 24,
+    backgroundColor: '#7ca8ff',
+    width: 16,
+    height: 2,
+    marginRight: 176,
+  },
+  color5: {
+    position: 'absolute',
+    top: 0,
+    right: 143,
+    backgroundColor: '#7ca8ff',
+    width: 16,
+    height: 2,
+    marginRight: 176,
+  },
+  colorDiv6: {
+    position: 'absolute',
+    top: 0,
+    left: 120,
+    backgroundColor: '#7ca8ff',
+    width: 16,
+    height: 2,
+    marginRight: 176,
+  },
+  color6: {
+    position: 'absolute',
+    top: 0,
+    right: 47,
+    backgroundColor: '#7ca8ff',
+    width: 16,
+    height: 2,
+    marginRight: 176,
+  },
+  colorDiv7: {
+    position: 'absolute',
+    top: 0,
+    left: 72,
+    backgroundColor: '#7ca8ff',
+    width: 16,
+    height: 2,
+    marginRight: 176,
+  },
+  color7: {
+    position: 'absolute',
+    top: 0,
+    right: 95,
+    backgroundColor: '#7ca8ff',
+    width: 16,
+    height: 2,
+    marginRight: 176,
+  },
+  colorDiv8: {
+    position: 'absolute',
+    top: 0,
+    left: 168,
+    backgroundColor: '#7ca8ff',
+    width: 16,
+    height: 2,
+    marginRight: 176,
+  },
+  color8: {
+    backgroundColor: '#7ca8ff',
+    width: 15,
+    height: 2,
+    marginRight: 176,
+  },
+  row: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#ffffff',
+    paddingRight: 11,
+    paddingLeft: 12,
+    height: 48,
+    marginBottom: 12,
+  },
+  group2: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  coupon: {
+    color: '#333333',
+    fontSize: 14,
+    marginRight: 8,
+  },
+  sWrap: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: 20,
+    height: 20,
+  },
+  s: {
+    width: 13,
+    height: 3,
+  },
+  row1: {
+    backgroundColor: '#ffffff',
+    paddingTop: 16,
+    paddingBottom: 15,
+    height: 296,
+    marginBottom: 12,
+  },
+  block5: {
+    flexDirection: 'row',
+    marginBottom: 13,
+    marginLeft: 12,
+    marginRight: 12,
+  },
+  img: {
+    borderRadius: 4,
+    width: 80,
+    height: 80,
+    marginRight: 12,
+  },
+  group3: {
+    height: 80,
+    marginTop: 4,
+  },
+  group4: {
+    flexDirection: 'row',
+    marginBottom: 8,
+  },
+  summary: {
+    color: '#333333',
+    fontSize: 14,
+    marginRight: 20,
+  },
+  moneyWrap: {
+  },
+  money: {
+    color: '#333333',
+    fontSize: 14,
+    marginBottom: 8,
+  },
+  wrap: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginLeft: 13,
+    marginRight: 13,
+  },
+  txt1: {
+    color: '#b3b3b3',
+    fontSize: 14,
+  },
+  chicken: {
+    color: '#b3b3b3',
+    fontSize: 12,
+  },
+  group5: {
+    height: 80,
+    marginTop: 4,
+  },
+  priceWrap: {
+    flexDirection: 'row',
+    marginBottom: 4,
+  },
+  desc1: {
+    color: '#333333',
+    fontSize: 14,
+    marginRight: 69,
+  },
+  price: {
+    color: '#333333',
+    fontSize: 14,
+  },
+  word: {
+    marginLeft: 244,
+    color: '#b3b3b3',
+    fontSize: 14,
+    marginBottom: 8,
+  },
+  empty: {
+    opacity: 1.00,
+    borderRadius: 2,
+    backgroundImage: 'linear-gradient(to right, rgb(247,247,247), rgb(245,245,245))',
+    width: 80,
+    height: 80,
+    marginRight: 12,
+  },
+  group6: {
+    flexDirection: 'row',
+    marginBottom: 8,
+  },
+  summary1: {
+    color: '#333333',
+    fontSize: 14,
+    marginRight: 11,
+  },
+  block6: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginLeft: 18,
+    marginRight: 18,
+  },
+  main: {
+    justifyContent: 'center',
+    backgroundColor: '#ffffff',
+    height: 80,
+    marginBottom: 12,
+  },
+  messageCanNotBeFilled: {
+    marginLeft: 12,
+    color: '#333333',
+    fontSize: 16,
+    marginBottom: 18,
+  },
+  desc2: {
+    marginLeft: 12,
+    color: '#b3b3b3',
+    fontSize: 16,
+  },
+  row2: {
+    backgroundColor: '#ffffff',
+    paddingTop: 16,
+    paddingBottom: 15,
+    height: 166,
+    marginBottom: 12,
+  },
+  block7: {
+    flexDirection: 'row',
+    marginBottom: 14,
+    flexWrap: 'wrap',
+    marginLeft: 1,
+  },
+  price1: {
+    color: '#333333',
+    fontSize: 14,
+    marginRight: 249,
+  },
+  money1: {
+    color: '#ff6600',
+    fontSize: 14,
+    marginRight: 249,
+  },
+  block8: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 14,
+    marginLeft: 12,
+    marginRight: 11,
+  },
+  price2: {
+    color: '#333333',
+    fontSize: 14,
+  },
+  group7: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  infoWrap: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: 'rgba(255,102,0,1.00)',
+    backgroundColor: '#ffffff',
+    paddingRight: 9,
+    paddingLeft: 8,
+    height: 20,
+  },
+  info: {
+    color: '#ff6600',
+    fontSize: 12,
+  },
+  group8: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: 20,
+  },
+  block9: {
+    position: 'relative',
+    width: 4,
+    height: 10,
+  },
+  block10: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 14,
+    marginLeft: 12,
+    marginRight: 11,
+  },
+  priceWrap1: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: 16,
+  },
+  price3: {
+    color: '#ff6600',
+    fontSize: 14,
+    marginRight: 8,
+  },
+  block11: {
+    position: 'relative',
+    width: 4,
+    height: 10,
+  },
+  ft: {
+    justifyContent: 'center',
+    backgroundColor: '#ffffff',
+    height: 104,
+  },
+  price4: {
+    marginLeft: 12,
+    color: '#333333',
+    fontSize: 16,
+    marginBottom: 16,
+  },
+  block12: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginLeft: 12,
+    marginRight: 11,
+  },
+  group9: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  weixinWrap: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    borderRadius: 6,
+    backgroundColor: '#3ecf78',
+    paddingRight: 9,
+    paddingLeft: 8,
+    height: 40,
+    marginRight: 8,
+  },
+  weixin: {
+    width: 24,
+    height: 20,
+  },
+  icongoumaichenggongWrap: {
+    position: 'relative',
+    marginTop: 10,
+    width: 20,
+    height: 20,
+  },
+  div1: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: 20,
+    height: 20,
+  },
+  color9: {
+    backgroundColor: '#ffffff',
+    height: 94,
+    boxShadow: 'inset 0px 0.5px 0px rgba(235, 235, 235, 1.00)',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+  },
+  view: {
+    bottom: 34,
+    left: 0,
+    boxShadow: 'inset 0px 0.5px 0px rgba(235, 235, 235, 1.00)',
+    position: 'absolute',
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#ffffff',
+    paddingRight: 11,
+    paddingLeft: 12,
+    height: 60,
+  },
+  tagWrap: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    borderRadius: 6,
+    backgroundImage: 'linear-gradient(to top right, rgba(254, 154, 41, 1), rgba(254, 90, 20, 1))',
+    paddingRight: 27,
+    paddingLeft: 27,
+    height: 40,
+  },
+  tag: {
+    color: '#ffffff',
+    fontSize: 14,
+  },
+  block13: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    height: 34,
+  },
+  colorDiv9: {
+    marginTop: 22,
+    borderRadius: 2,
+    backgroundColor: '#000000',
+    width: 134,
+    height: 4,
+  },
+});",
+}
+`;

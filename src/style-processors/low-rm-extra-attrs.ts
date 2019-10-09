@@ -1,6 +1,9 @@
 import { ILayoutNode } from "../typings";
 import { delKeys } from "./utils";
 
+
+import debug from  'debug';
+const log  = debug('style:low-rm-extra-attrs');
 /**
  * 删除结点无用样式
  **/

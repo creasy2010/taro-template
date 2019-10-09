@@ -1,6 +1,8 @@
 import { ILayoutNode } from "../typings";
 import { delKeys } from "./utils";
 
+import debug from  'debug';
+const log  = debug('style:low-single-lineheight');
 /**
  * 公共的单倍行高
  **/
