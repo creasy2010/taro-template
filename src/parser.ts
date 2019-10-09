@@ -1,7 +1,8 @@
-import { join } from "path";
 import { ILayoutNode, IParseConfig, IParseResult } from "./typings";
 import { processStyle } from './style-processors';
 import { generateCode } from './code-generators';
+import { join } from "path";
+import * as fsExtra from "fs-extra";
 
 
 const dealImg = (config: IParseConfig, data: ILayoutNode) => {
@@ -9,7 +10,7 @@ const dealImg = (config: IParseConfig, data: ILayoutNode) => {
     config.imgDir = "./src/assets/image/";
   }
   config.imgDir = './data/' + config.pagePath + '/img';
-  config.fsExtra.ensureDirSync(config.imgDir);
+  fsExtra.ensureDirSync(join(config.pwd, config.imgDir));
 
   // 递归处理图片方法
   const dealImage = (data: ILayoutNode) => {
@@ -30,14 +31,13 @@ const dealImg = (config: IParseConfig, data: ILayoutNode) => {
   const downloadImg = (src) => {
     let imgName = `${config.pageName}${imgIdx++}`;
     config.urllib.request(src, (err, data) => {
-      config.fsExtra.writeFile(`${config.imgDir}/${imgName}.png`, data);
+      config.fsExtra.writeFile( join(config.pwd,config.imgDir,`${imgName}.png`), data);
     });
     return imgName;
   };
 
   // 1.递归处理图片结点并下载图片
   dealImage(data);
-
 }
 
 /**
@@ -60,6 +60,7 @@ const getLayoutJson = async (config: IParseConfig): Promise<ILayoutNode> => {
     });
   });
 
+  //去除px的单位;
   const rmLineHeightPx = (style) => {
     let lineHeight = style.lineHeight;
     if (lineHeight && lineHeight.endsWith('px')) {

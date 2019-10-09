@@ -7,8 +7,8 @@ import rnGenerrator from './react-native';
 /**
  * 切分布局
  */
-const divideLayout = (data: ILayoutNode, config: IParseConfig) => {
-  let componentNodes = [];
+const divideLayout = (data: ILayoutNode, config: IParseConfig):ILayoutNode[] => {
+  let componentNodes:ILayoutNode[] = [];
 
   data.componentName = config.pageName;
 
@@ -43,5 +43,5 @@ export const generateCode =  async (config: IParseConfig, data: ILayoutNode): Pr
   return {
     subComps,
     mainComp
-  };;
+  };
 }

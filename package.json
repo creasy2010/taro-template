@@ -1,22 +1,26 @@
 {
   "name": "taro-imgcook",
-  "version": "0.0.0-alpha.2",
+  "version": "0.0.0-alpha.4",
   "main": "lib/index.js",
   "scripts": {
     "build": "tsc",
-    "code": " node lib/bin/index.js"
+    "code": "node lib/bin/index.js"
   },
   "dependencies": {
     "@imgcook/dsl-helper": "^0.0.1-alpha.0",
     "fs-extra": "^8.1.0",
     "lodash": "^4.17.11",
     "prettier": "^1.11.1",
-    "typescript": "^3.5.2",
     "urllib": "^2.34.0"
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.6.0",
     "@types/fs-extra": "^5.0.5",
+    "@types/jest": "^24.0.18",
     "@types/lodash": "^4.14.136",
-    "@types/urllib": "^2.33.0"
+    "@types/urllib": "^2.33.0",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.6.3"
   }
 }
