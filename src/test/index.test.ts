@@ -1,6 +1,7 @@
 import parser from '../parser';
 import * as urllib from 'urllib';
 import {join} from 'path';
+import {tmpdir} from 'os';
 import * as fsExtra from 'fs-extra';
 /**
  * @desc
@@ -18,7 +19,7 @@ it('should 正常解析', async () => {
     moduleId: '13398',
     pagePath: '/test',
     pageName: 'pageTitle',
-    pwd: join(__dirname, 'index.workbench'),
+    pwd: join(tmpdir(), 'index.workbench'),
   };
 
   let res = await parser(config);

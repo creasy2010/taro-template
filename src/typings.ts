@@ -8,6 +8,12 @@ export interface IParseConfig {
   imgDir?: string;
 }
 
+
+export interface IContext{
+  node:ILayoutNode;
+  config:IParseConfig;
+}
+
 export interface ILayoutNode {
   children: ILayoutNode[];
   type: 'Text' | 'Image' | 'Block' | 'Repeat' | 'Shape';
