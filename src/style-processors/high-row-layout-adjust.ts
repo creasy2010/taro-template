@@ -60,7 +60,7 @@ export function enter(node: ILayoutNode) {
       // fixme classnName防重处理
       headBlock.attrs.className = 'disFlex';
       headBlock.style = {
-        display: 'flex',
+        // display: 'flex',
         alignItems: 'center'
       };
     }

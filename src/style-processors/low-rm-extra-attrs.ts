@@ -16,7 +16,7 @@ export function enter(node: ILayoutNode) {
 export function exit(node: ILayoutNode) {
   const { type, style: { flexDirection, justifyContent, alignItems, display } } = node;
   if (type === 'Text') {
-    delKeys(['whiteSpace', 'overflow', 'textOverflow', 'whiteSpace', 'maxWidth', 'height', 'width', 'lines'], node.style);
+    delKeys(['whiteSpace', 'overflow', 'textOverflow', 'whiteSpace', 'maxWidth', 'height', 'width', 'lines', 'fontWeight', 'lineHeight', 'letterSpacing'], node.style);
     if (node.style.fontWeight == 400) delete node.style.fontWeight;
   }
   if(type === 'Image') {

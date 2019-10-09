@@ -28,11 +28,11 @@ export default (data: ILayoutNode, config: IParseConfig): ICompData => {
       });
     }
     let attrStr = '';
-    attrStr += node.attrs.src ? ` source={${node.attrs.src}}` : '';
+    attrStr += node.attrs.src ? ` source={require('./img/${node.attrs.src}.png')}` : '';
     attrStr += node.attrs.className ? ` style={styles.${node.attrs.className}}` : '';
 
     if (node.innerText) {
-      lines.push(line(`<${nodeType}${attrStr}>${node.innerText}</${nodeType}>`, level));
+      lines.push(line(`<${nodeType}${attrStr} allowFontScaling={false}>${node.innerText}</${nodeType}>`, level));
     } else if (nodeType === 'Image') {
       lines.push(line(`<${nodeType}${attrStr}/>`, level));
     } else {
